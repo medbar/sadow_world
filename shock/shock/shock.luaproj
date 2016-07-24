@@ -24,15 +24,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Animation.lua" />
     <Compile Include="debug.lua" />
+    <Compile Include="levels\active_objects.lua" />
+    <Compile Include="levels\background.lua" />
+    <Compile Include="levels\decor.lua" />
     <Compile Include="world\enemy.lua" />
     <Compile Include="world\game.lua" />
-    <Compile Include="world\ground.lua" />
+    <Compile Include="levels\ground.lua" />
     <Compile Include="main.lua" />
     <Compile Include="menu.lua" />
     <Compile Include="player\player.lua" />
+    <Compile Include="world\level.lua" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="graphics\" />
+    <Folder Include="levels\" />
     <Folder Include="player\" />
     <Folder Include="world\" />
   </ItemGroup>

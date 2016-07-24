@@ -55,7 +55,6 @@ function menu.draw()
 end
 
 function menu.mousereleased(x,y,button)
-	act = "fail" --DEBUG
 	if  menu.focus ~=0 then 
 		CHANGE_STATE(menu.bottons[menu.focus].action)
 		

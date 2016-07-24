@@ -7,8 +7,8 @@ function player.load()
 	player.model = love.graphics.newImage("resources/player.png")
 	player.jump = false
 	-- physical character
-	player.body = love.physics.newBody(world, 650, 650 / 2, "dynamic")
-	player.shape = love.physics.newRectangleShape(player.model:getWidth(), player.model:getHeight())
+	player.body = love.physics.newBody(game.world, 650, 650 / 2, "dynamic")
+	player.shape = love.physics.newRectangleShape(player.model:getWidth()-100, player.model:getHeight()-20)
 	-- player.shape =  love.physics.newRectangleShape(100,200)
 	player.fixture = love.physics.newFixture(player.body, player.shape, 0)
 	player.fixture:setUserData("player")
@@ -53,7 +53,7 @@ end
 
 function player.draw()
 
-	love.graphics.translate(650 / 2 - player.body:getX(), 650 / 2 - player.body:getY())
+	
 	
 	--love.graphics.polygon("fill",player.body:getWorldPoints(player.shape:getPoints()))
 	love.graphics.setColor(255, 255, 255)
