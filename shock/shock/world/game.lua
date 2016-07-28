@@ -1,31 +1,12 @@
+-- ОСНОВНОЙ КЛАСС ДЛЯ ИГРОВОГО ПРОЦЕССА 
+
+
 
 require "player/player"
 
 require "world/level"
 
 
-
--- TODO 
------------СДЕЛАНО------------------------------------------------
---	загрузка определенного левела 
---	объекты дизайна
---	
---	Кроме объектов "земля" добавить объекты "тип активаторы"
--- также объекты с которыми можно взаимодействовать
------------СДЕЛАНО-------------------------------------------------
---
---	Сделать гейм-диспетчер основной задачей которого
--- будет подгружать в level нужную локацию
---	 из level'a будут вызываться все функции объектов этого левела 
---	
---	Анимации
---
---
---
---И на засладку немного ИИ
---
---
---
   
 game = {}
 
@@ -38,6 +19,7 @@ function game.load()
 	player.load()
 	level.load("")
 
+	return game
 end
 
 function game.update(dt)
@@ -47,7 +29,8 @@ function game.update(dt)
 end
 
 function game.draw()
-	love.graphics.translate(650 / 2 - player.body:getX(), 650 / 2 - player.body:getY())
+	love.graphics.translate(options.resolution.x / 2 - player.body:getX(),
+							 options.resolution.y / 2 - player.body:getY())
 	level.draw()
 	player.draw()
 end
@@ -55,6 +38,8 @@ end
 
 function game.destroy()
 	game.world:destroy()
+	level.destroy()
+	player.destroy()
 end
 
 
@@ -79,4 +64,25 @@ end
  
 function postSolve(a, b, coll, normalimpulse, tangentimpulse)
 
+end
+
+
+
+
+
+
+
+-------------------------------- game actions -----------------------------------
+
+function PAUSE()
+	IN_PROCESS = menu.load("pause_menu")
+end
+
+function LOSE()
+	IN_PROCESS = menu.load("lose_menu")
+end
+
+
+function WIN()
+	IN_PROCESS = menu.load("win_menu")
 end

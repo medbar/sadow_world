@@ -25,10 +25,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animation.lua" />
-    <Compile Include="debug.lua" />
+    <Compile Include="my_debug.lua" />
     <Compile Include="levels\active_objects.lua" />
     <Compile Include="levels\background.lua" />
     <Compile Include="levels\decor.lua" />
+    <Compile Include="menu\actions.lua" />
+    <Compile Include="menu\main_menu.lua" />
+    <Compile Include="menu\option_menu.lua" />
+    <Compile Include="menu\pause_menu.lua" />
+    <Compile Include="options.lua" />
     <Compile Include="world\enemy.lua" />
     <Compile Include="world\game.lua" />
     <Compile Include="levels\ground.lua" />
@@ -39,9 +44,23 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="graphics\" />
+    <Folder Include="graphics\menu\" />
     <Folder Include="levels\" />
+    <Folder Include="menu\" />
     <Folder Include="player\" />
     <Folder Include="world\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="graphics\menu\bg_option_menu.png" />
+    <Content Include="graphics\menu\bg_pause_menu.png" />
+    <Content Include="graphics\menu\bg_main_menu.png" />
+    <Content Include="graphics\big_boss.jpg" />
+    <Content Include="graphics\menu\botton.bmp" />
+    <Content Include="graphics\cobble.jpg" />
+    <Content Include="graphics\dirt.jpg" />
+    <Content Include="graphics\sun.gif" />
+    <Content Include="graphics\sun.png" />
+    <Content Include="TODO.TXT" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

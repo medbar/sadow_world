@@ -7,7 +7,7 @@ function player.load()
 	player.model = love.graphics.newImage("resources/player.png")
 	player.jump = false
 	-- physical character
-	player.body = love.physics.newBody(game.world, 650, 650 / 2, "dynamic")
+	player.body = love.physics.newBody(game.world, options.resolution.x, options.resolution.y / 2, "dynamic")
 	player.shape = love.physics.newRectangleShape(player.model:getWidth()-100, player.model:getHeight()-20)
 	-- player.shape =  love.physics.newRectangleShape(100,200)
 	player.fixture = love.physics.newFixture(player.body, player.shape, 0)
@@ -17,17 +17,16 @@ end
 
 
 function player.update(dt)
-	-- do something
 
 
-	if love.keyboard.isDown("right") then
+	if love.keyboard.isDown(options.controls.right) then
 		player.body:applyForce(1000, 0)
 	end
-	if love.keyboard.isDown("left") then
+	if love.keyboard.isDown(options.controls.left) then
 		player.body:applyForce(-1000, 0)
 	end
 
-	if love.keyboard.isDown("space") then
+	if love.keyboard.isDown(options.controls.jump) then
 		if not player.jump then
 			player.jump = true
 			local x = player.body:getLinearVelocity()
@@ -38,13 +37,12 @@ function player.update(dt)
 			-- player.body:applyForce(0,-1000)
 		end
 	end
-	if love.keyboard.isDown("escape") then
-		CHANGE_STATE("pause")
+	if love.keyboard.isDown(options.controls.pause) then
+		PAUSE()
 		--
 		--
 		-- остановочка вышла 
-		-- TO  DO
-		--сделать меню паузы, сделать нормальную загрузку скриптов меню!
+	
 		--
 		--	
 	end
@@ -59,5 +57,9 @@ function player.draw()
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.draw(player.model, player.body:getX() - player.model:getWidth() / 2,
 	player.body:getY() - player.model:getHeight() / 2)
+
+end
+
+function player.destroy()
 
 end

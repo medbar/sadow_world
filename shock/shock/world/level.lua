@@ -25,12 +25,8 @@ function level.load(level_directory)
 	end
 
 	level.decor = require(level.directory.."decor")
-	for i, obj in ipairs(level.decor) do
-		if not level.textures[obj.tFile] then
-			level.textures[obj.tFile] = love.graphics.newImage(obj.tFile)
-		end
-		obj:init(level.textures)
-	end
+	INIT_COLLECTION(level, "decor")
+
 	level.active_objects = require(level.directory.."active_objects")
 	--level.nps = require(love.directory.."nps")
 	--
@@ -69,4 +65,9 @@ function level.DRAW_GROUND()
 	for i,block in ipairs(level.ground) do
 		love.graphics.polygon("fill",block.body:getWorldPoints(block.shape:getPoints()))
 	end
+end
+
+
+
+function level.destroy()
 end

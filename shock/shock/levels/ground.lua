@@ -5,20 +5,17 @@
 return {	
 	--первый блок земли
 			{
-				tFile = "graphics/dirt.png",
+				texture_name = "graphics/dirt.png",
 				x = 650,
 				y = 650-50/2,
-				init = FROM_ATLAS,  --ОСТАНОВИЛСЯ
-				--ПЕРЕДЕЛАТЬ ВСЕ СКРИПТИКИ ПОД НОВЫЙ ФОРМАТ
-				-- сделать иниты для всех типов 
-				--изменить способ прослушки событий на методы
-
+				init = FROM_ATLAS, 
+				
 				w = 1300,
 				h = 50		
 			},
 	--левая стенка 
 			{
-				tFile = "graphics/cobble.jpg",
+				texture_name = "graphics/cobble.jpg",
 				x = 50/2,
 				y = 650/2,
 				w = 50, 
@@ -26,7 +23,7 @@ return {
 			},
 	--второй блок земли
 			{
-				tFile = "graphics/dirt.png",
+				texture_name = "graphics/dirt.png",
 				x = 650,
 				y = 600 - 50/2,
 				w = 1300,
@@ -34,7 +31,7 @@ return {
 			},
 	-- блок, висящий в воздухе
 			{
-				tFile = "graphics/skyBlock.png",
+				texture_name = "graphics/skyBlock.png",
 				x= 650, 
 				y =550,
 				w = 50,
