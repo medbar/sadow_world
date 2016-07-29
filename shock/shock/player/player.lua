@@ -1,4 +1,4 @@
-
+п»ї
 player = { }
 
 function player.load()
@@ -41,7 +41,7 @@ function player.update(dt)
 		PAUSE()
 		--
 		--
-		-- остановочка вышла 
+		-- РѕСЃС‚Р°РЅРѕРІРѕС‡РєР° РІС‹С€Р»Р° 
 	
 		--
 		--	

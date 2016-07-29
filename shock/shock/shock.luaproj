@@ -25,6 +25,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animation.lua" />
+    <Compile Include="menu\special_option_menu.lua" />
     <Compile Include="my_debug.lua" />
     <Compile Include="levels\active_objects.lua" />
     <Compile Include="levels\background.lua" />

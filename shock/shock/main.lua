@@ -1,4 +1,4 @@
--- game state :
+п»ї-- game state :
 -- main_menu
 -- win_menu
 -- lose_menu
@@ -16,7 +16,7 @@ require "menu"
 
 function love.load()
 	
-	options.load()  -- ченить придумать с хранением настроек 
+	options.load()  -- С‡РµРЅРёС‚СЊ РїСЂРёРґСѓРјР°С‚СЊ СЃ С…СЂР°РЅРµРЅРёРµРј РЅР°СЃС‚СЂРѕРµРє 
 	love.window.setMode(options.resolution.x, options.resolution.y,options.graphics)
 		
 	IN_PROCESS = menu.load("main_menu")
