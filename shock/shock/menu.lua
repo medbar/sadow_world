@@ -6,9 +6,16 @@ require "menu/actions"
 
 MENU_SCRIPTS_PATH = "menu/"
 
-menu = {}
+menu = {
+		history = {},
+		previous =  function()
+						menu.history[#menu.history] = nil
+						return menu.history[#menu.history]				
+					end
+		}
 
 function menu.load(menu_type)
+	table.insert(menu.history, menu_type)
 	menu.elements = {}
 	menu.textures = {}
 	menu.background = love.graphics.newImage("graphics/menu/bg_"..menu_type..".png")
@@ -77,6 +84,7 @@ end
 
 
 function menu.destroy()
+	menu.history = {}
 	menu.elements = nil
 	menu.textures = nil
 	menu.background = nil

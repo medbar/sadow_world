@@ -30,6 +30,16 @@ function love.mousereleased(x, y, button, istouch)
 end
 
 
+
+
+function love.resize( w, h )
+	options.resolution.x = w
+	options.resolution.y = h
+end
+
+
+
+
 function love.update(dt)
 	
 	IN_PROCESS.update(dt)

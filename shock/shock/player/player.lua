@@ -7,7 +7,7 @@ function player.load()
 	player.model = love.graphics.newImage("resources/player.png")
 	player.jump = false
 	-- physical character
-	player.body = love.physics.newBody(game.world, options.resolution.x, options.resolution.y / 2, "dynamic")
+	player.body = love.physics.newBody(game.world, 200, 200, "dynamic") -- started coordinate
 	player.shape = love.physics.newRectangleShape(player.model:getWidth()-100, player.model:getHeight()-20)
 	-- player.shape =  love.physics.newRectangleShape(100,200)
 	player.fixture = love.physics.newFixture(player.body, player.shape, 0)
