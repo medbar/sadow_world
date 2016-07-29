@@ -10,7 +10,9 @@ menu = {
 		history = {},
 		previous =  function()
 						menu.history[#menu.history] = nil
-						return menu.history[#menu.history]				
+						local answ = menu.history[#menu.history]
+						menu.history[#menu.history] = nil
+						return answ			
 					end
 		}
 
@@ -26,6 +28,12 @@ function menu.load(menu_type)
 	menu.elements = require(MENU_SCRIPTS_PATH .. menu_type)
 
 	INIT_COLLECTION(menu,"elements")
+
+	
+	for i,obj in ipairs(menu.elements) do
+		local font = love.graphics.newFont(obj.fontSize)
+		obj.TEXT = love.graphics.newText(font,obj.text)
+	end
 
 	menu.focus = 0 -- botton in focus index
 
@@ -51,14 +59,17 @@ function menu.update(dt)
 end
 
 function menu.draw()	
+	-- draw background 
 	love.graphics.setColor(255,255,255)
-	love.graphics.setFont(love.graphics.newFont(15))
+
 	love.graphics.draw(menu.background,0,0,0,
 							options.resolution.x / menu.background:getWidth(),
 							options.resolution.y / menu.background:getHeight())
+	--
 
+	--draw elements
 	for i,b in ipairs(menu.elements) do 
-	
+		-- graphic
 		if i == menu.focus then
 			love.graphics.setColor(120,120,120)
 		else 
@@ -66,16 +77,41 @@ function menu.draw()
 		end
 		
 		b:draw(menu.textures)
-		love.graphics.setColor(208,36,140)
-		love.graphics.print(b.text,
-							b.x*options.resolution.x - menu.textures[b.texture_name]:getWidth() / (3*i), 
-							b.y*options.resolution.y - menu.textures[b.texture_name]:getHeight() / 4)				
+		--
+		-- text
+		love.graphics.setColor(200,20,100)
+		if b.drawText then
+			b:drawText()
+		else
+			love.graphics.draw(b.TEXT, b.x * options.resolution.x -  b.TEXT:getWidth() / 2,
+									   b.y * options.resolution.y - b.TEXT:getHeight() / 2 )
+		end
+		--
+		
+	end
+	
+	--
+
+end
+
+
+function menu.drawText()
+	
+end
+
+
+function menu.mousepressed(x,y,botton)
+	if menu.focus ~=0 then
+		if menu.elements[menu.focus].mousepressed then
+		menu.elements[menu.focus]:mousepressed(x - menu.elements[menu.focus].x * options.resolution.x +  menu.textures[menu.elements[menu.focus].texture_name]:getWidth() / 2,
+											   y - menu.elements[menu.focus].y * options.resolution.y  +  menu.textures[menu.elements[menu.focus].texture_name]:getHeight() / 2)
+		end
 	end
 end
 
 function menu.mousereleased(x,y,botton)
 	if  menu.focus ~=0 then 
-		menu.elements[menu.focus].action()	
+		menu.elements[menu.focus]:action()	
 	end
 end
 

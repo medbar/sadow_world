@@ -33,7 +33,8 @@ function options.generateNew()
 						}
 	options.resolution = {
 						x = 1200,
-						y = 700
+						y = 700,
+					
 						}
 	---------------
 

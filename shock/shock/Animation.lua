@@ -39,7 +39,7 @@ function POLYGON(self)
 end
 
 function FROM_ATLAS()
-	-------------------------------додумать
+	--додумать
 end
 
 function IMAGE_OBJECT(self, textures)

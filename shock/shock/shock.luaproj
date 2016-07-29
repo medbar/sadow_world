@@ -25,7 +25,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animation.lua" />
-    <Compile Include="menu\special_option_menu.lua" />
+    <Compile Include="menu\graphics_options.lua" />
     <Compile Include="my_debug.lua" />
     <Compile Include="levels\active_objects.lua" />
     <Compile Include="levels\background.lua" />
@@ -59,6 +59,7 @@
     <Content Include="graphics\menu\botton.bmp" />
     <Content Include="graphics\cobble.jpg" />
     <Content Include="graphics\dirt.jpg" />
+    <Content Include="graphics\menu\checkbox.png" />
     <Content Include="graphics\sun.gif" />
     <Content Include="graphics\sun.png" />
     <Content Include="TODO.TXT" />

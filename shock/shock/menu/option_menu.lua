@@ -5,13 +5,13 @@
 
 return {
 		--
-		{  x = 0.3, y = 0.4 , texture_name = "graphics/menu/botton.bmp", text = "Graphics", action = GO_TO_GRAPHICS },
+		{  x = 0.3, y = 0.4 , texture_name = "graphics/menu/botton.bmp", text = "Graphics", fontSize = 18, action = GO_TO_GRAPHICS },
 		--
-		{  x = 0.5, y = 0.4 , texture_name = "graphics/menu/botton.bmp", text = "Sounds", action = GO_TO_SOUNDS },
+		{  x = 0.5, y = 0.4 , texture_name = "graphics/menu/botton.bmp", text = "Sounds", fontSize = 18, action = GO_TO_SOUNDS },
 		--
-		{  x = 0.7, y = 0.4 , texture_name = "graphics/menu/botton.bmp", text = "Controls", action = GO_TO_CONTROLS },
+		{  x = 0.7, y = 0.4 , texture_name = "graphics/menu/botton.bmp", text = "Controls", fontSize = 18, action = GO_TO_CONTROLS },
 		--
-		{ x = 0.5, y = 0.7 , texture_name  = "graphics/menu/botton.bmp", text = "back", action = GO_BACK}
+		{ x = 0.5, y = 0.7 , texture_name  = "graphics/menu/botton.bmp", text = "back", fontSize = 18, action = GO_BACK}
 		--
 		-- сюды можно вписать новые кнопки по примерам
 		

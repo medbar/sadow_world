@@ -22,10 +22,15 @@ function love.load()
 	IN_PROCESS = menu.load("main_menu")
 end
 
+function love.mousepressed(x,y, botton) 
+if IN_PROCESS.mousepressed then 
+		menu.mousepressed(x, y, botton)
+	end
+end
 
-function love.mousereleased(x, y, button, istouch)
+function love.mousereleased(x, y, botton)
 	if IN_PROCESS.mousereleased then 
-		menu.mousereleased(x, y, button)
+		menu.mousereleased(x, y, botton)
 	end
 end
 
