@@ -29,8 +29,8 @@ function game.update(dt)
 end
 
 function game.draw()
-	love.graphics.translate(options.resolution.x / 2 - player.body:getX(),
-							 options.resolution.y / 2 - player.body:getY())
+	love.graphics.translate(options.resolution.w / 2 - player.body:getX(),
+							 options.resolution.h / 2 - player.body:getY())
 	level.draw()
 	player.draw()
 end

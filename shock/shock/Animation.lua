@@ -20,8 +20,7 @@ end
 																										--vertices =  {x1,y1,x2,y2,...} 
 --					IMAGE_OBJECT	- объект, загружающийся из картинки.  
 --					ANIMATED_OBJECT	- анимированный объект, грузится из атласа.   
---					FROM_ATLAS	-   объект, загружающийся из атласа. Обязательные поля - WrapMode = ("repeat" or "clamp" or "clampzero" or morroredrepeat),
---																						 width, height, xInPic, yInPic
+--					FROM_ATLAS	-   объект, загружающийся из атласа. Обязательные поля - width, height, xInPic, yInPic
 --
 --  для анимации обязательны : texture_name, number_of_frames, frame_dt 
 --  texture_name - атлас текстур кадров, кадры расположенны друг за другом вдоль оси х
@@ -38,16 +37,35 @@ function POLYGON(self)
 
 end
 
-function FROM_ATLAS()
-	--додумать
+function FROM_ATLAS(self, textures)
+
+		self.quad = love.graphics.newQuad(self.xInPic, self.yInPic,
+										  self.width, self.height, 
+										  textures[self.texture_name]:getDimensions())
+		
+		self.draw = DRAW_FROM_ATLAS
+end
+
+function DRAW_FROM_ATLAS(self, textures)
+		if self.x < 1 and self.x > 0 then
+	love.graphics.draw(textures[self.texture_name],
+							self.quad,
+							self.x * options.resolution.w  -  textures[self.texture_name]:getWidth() / 2,
+							self.y * options.resolution.h  -  textures[self.texture_name]:getHeight() / 2)
+		else
+			love.graphics.draw(textures[self.texture_name],
+							self.quad,
+							self.x,
+							self.y)
+		end
 end
 
 function IMAGE_OBJECT(self, textures)
 	if self.x < 1 and self.x > 0 then
 	self.draw = function(self,textures)
 							love.graphics.draw(textures[self.texture_name],
-							self.x * options.resolution.x -  textures[self.texture_name]:getWidth() / 2,
-							self.y * options.resolution.y  -  textures[self.texture_name]:getHeight() / 2)
+							self.x * options.resolution.w -  textures[self.texture_name]:getWidth() / 2,
+							self.y * options.resolution.h  -  textures[self.texture_name]:getHeight() / 2)
 				end
 	else
 		self.draw = function(self, textures)
@@ -89,8 +107,8 @@ function DRAW_ANIMATED_OBJ(self, textures)
 		if self.x < 1 and self.x > 0 then
 			love.graphics.draw(textures[self.texture_name],
 							self.quads[self.frameId],
-							self.x * options.resolution.x  -  textures[self.texture_name]:getWidth() / 2,
-							self.y * options.resolution.y  -  textures[self.texture_name]:getHeight() / 2)
+							self.x * options.resolution.w  -  textures[self.texture_name]:getWidth() / 2,
+							self.y * options.resolution.h  -  textures[self.texture_name]:getHeight() / 2)
 		else 
 		love.graphics.draw(textures[self.texture_name],
 							self.quads[self.frameId],

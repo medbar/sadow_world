@@ -27,13 +27,15 @@ function menu.load(menu_type)
 	end
 	menu.elements = require(MENU_SCRIPTS_PATH .. menu_type)
 
-	INIT_COLLECTION(menu,"elements")
-
-	
 	for i,obj in ipairs(menu.elements) do
 		local font = love.graphics.newFont(obj.fontSize)
 		obj.TEXT = love.graphics.newText(font,obj.text)
 	end
+
+	INIT_COLLECTION(menu,"elements")
+
+	
+	
 
 	menu.focus = 0 -- botton in focus index
 
@@ -43,14 +45,14 @@ end
 
 
 function menu.update(dt)
-	--options.resolution.x =  650
+	--options.resolution.w =  650
 	--fWINDOW_HEIGHT = ff
 	local mX = love.mouse.getX()
 	local mY = love.mouse.getY()
 	menu.focus = 0
 	for i,b in ipairs(menu.elements) do
-	if math.abs(mX - b.x*options.resolution.x) < menu.textures[b.texture_name]:getWidth() and
-	  math.abs(mY - b.y*options.resolution.y) < menu.textures[b.texture_name]:getHeight() 
+	if math.abs(mX - b.x*options.resolution.w) < menu.textures[b.texture_name]:getWidth() and
+	  math.abs(mY - b.y*options.resolution.h) < menu.textures[b.texture_name]:getHeight() 
 	  then
 		menu.focus = i
 		break
@@ -63,8 +65,8 @@ function menu.draw()
 	love.graphics.setColor(255,255,255)
 
 	love.graphics.draw(menu.background,0,0,0,
-							options.resolution.x / menu.background:getWidth(),
-							options.resolution.y / menu.background:getHeight())
+							options.resolution.w / menu.background:getWidth(),
+							options.resolution.h / menu.background:getHeight())
 	--
 
 	--draw elements
@@ -83,8 +85,8 @@ function menu.draw()
 		if b.drawText then
 			b:drawText()
 		else
-			love.graphics.draw(b.TEXT, b.x * options.resolution.x -  b.TEXT:getWidth() / 2,
-									   b.y * options.resolution.y - b.TEXT:getHeight() / 2 )
+			love.graphics.draw(b.TEXT, b.x * options.resolution.w -  b.TEXT:getWidth() / 2,
+									   b.y * options.resolution.h - b.TEXT:getHeight() / 2 )
 		end
 		--
 		
@@ -103,8 +105,8 @@ end
 function menu.mousepressed(x,y,botton)
 	if menu.focus ~=0 then
 		if menu.elements[menu.focus].mousepressed then
-		menu.elements[menu.focus]:mousepressed(x - menu.elements[menu.focus].x * options.resolution.x +  menu.textures[menu.elements[menu.focus].texture_name]:getWidth() / 2,
-											   y - menu.elements[menu.focus].y * options.resolution.y  +  menu.textures[menu.elements[menu.focus].texture_name]:getHeight() / 2)
+		menu.elements[menu.focus]:mousepressed(x - menu.elements[menu.focus].x * options.resolution.w +  menu.textures[menu.elements[menu.focus].texture_name]:getWidth() / 2,
+											   y - menu.elements[menu.focus].y * options.resolution.h  +  menu.textures[menu.elements[menu.focus].texture_name]:getHeight() / 2)
 		end
 	end
 end

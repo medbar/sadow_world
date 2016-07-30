@@ -4,7 +4,8 @@
 		
 function DEBUG_UPDATE()
 	DEBUG_INFO = "debug info:\n"
-	DEBUG_INFO = DEBUG_INFO .. options.resolution.x.." "..options.resolution.y.."\n"
+	DEBUG_INFO = DEBUG_INFO .. options.resolutionId.."\n"
+	DEBUG_INFO = DEBUG_INFO .. options.resolution.w.." "..options.resolution.h.."\n"
 	DEBUG_INFO = DEBUG_INFO ..love.window.getPixelScale() .. "\n"
 	if IN_PROCESS == game then
 		DEBUG_INFO = DEBUG_INFO..player.body:getX() .. ", "..player.body:getY() .. "\n"

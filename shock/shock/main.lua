@@ -17,7 +17,7 @@ require "menu"
 function love.load()
 	
 	options.load()  -- ченить придумать с хранением настроек 
-	love.window.setMode(options.resolution.x, options.resolution.y,options.graphics)
+	love.window.setMode(options.resolution.w, options.resolution.h,options.graphics)
 		
 	IN_PROCESS = menu.load("main_menu")
 end
@@ -38,8 +38,8 @@ end
 
 
 function love.resize( w, h )
-	options.resolution.x = w
-	options.resolution.y = h
+	options.resolution.w = w
+	options.resolution.h = h
 end
 
 

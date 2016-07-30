@@ -1,4 +1,6 @@
 ﻿
+function DO_NOTHING(self)end
+
 ---------------MAIN MENU --------------------
 
 function NEW_GAME(self)
@@ -56,5 +58,13 @@ end
 
 function CHANGE_FULLSCREEN(self)
 	options.graphics.fullscreen = not options.graphics.fullscreen
-	love.window.setFullscreen(options.graphics.fullscreen, "exclusive")
+	love.window.setMode(options.resolution.w, options.resolution.h, options.graphics)
+end
+
+function RESOLUTION_REDUCE(self)
+	options.changeResolution(false)
+end
+
+function RESOLUTION_INCREASE(self)
+	options.changeResolution(true)
 end
