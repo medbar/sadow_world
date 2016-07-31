@@ -6,7 +6,7 @@
 -- option
 -- pause
 
-
+debug = true
 
 require "my_debug"
 require "options"

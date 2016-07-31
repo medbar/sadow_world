@@ -80,10 +80,20 @@ function options.generateNew()
 						right = "right",
 						jump = "space",
 						attack = "k",
-						pause = "escape"
+						pause = "escape",
+
+						setKey =  function(name, key)									
+									for nm, k in pairs(options.controls) do
+										if key == k then 
+											options.controls[nm] = "?-?"
+											options.controls[name] = key
+											return
+										end
+									end
+									options.controls[name] = key
+								 end
 						}
 	--------------
 end
 
 
- 

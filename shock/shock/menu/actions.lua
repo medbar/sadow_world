@@ -46,7 +46,7 @@ function GO_TO_SOUNDS(self)
 end
 
 function GO_TO_CONTROLS(self)
-
+	menu.load("controls_options")
 end
 
 function GO_BACK(self)
@@ -67,4 +67,28 @@ end
 
 function RESOLUTION_INCREASE(self)
 	options.changeResolution(true)
+end
+
+--------------CONTROLS_OPTIONS----------------
+
+
+function CHANGE_CONTROL_KEY(self)
+	local old = options.controls[self.name]
+	options.controls[self.name] = "-----"
+	love.draw()
+	love.graphics.present()
+
+	local e, a, b, c, d
+	repeat
+		 e, key, b, c, d = love.event.wait()
+		 if e == "quit" then 
+			return
+		end
+		if e == "mousepressed" then
+			options.controls[self.name] =  old
+			return 
+		end
+	until  e == "keypressed"
+	
+	options.controls.setKey(self.name, key)
 end

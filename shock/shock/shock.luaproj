@@ -25,6 +25,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Animation.lua" />
+    <Compile Include="menu\controls_options.lua" />
     <Compile Include="menu\graphics_options.lua" />
     <Compile Include="my_debug.lua" />
     <Compile Include="levels\active_objects.lua" />
@@ -52,6 +53,7 @@
     <Folder Include="world\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="graphics\menu\bg_controls_options.png" />
     <Content Include="graphics\menu\bg_option_menu.png" />
     <Content Include="graphics\menu\bg_pause_menu.png" />
     <Content Include="graphics\menu\bg_main_menu.png" />
