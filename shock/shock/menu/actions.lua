@@ -19,7 +19,7 @@ function GO_TO_OPTIONS(self)
 end
 
 function EXIT(self)
-	
+	love.event.quit()
 end
 --------------------------------------------
 
