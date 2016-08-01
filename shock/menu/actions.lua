@@ -1,10 +1,12 @@
-﻿
+
 function DO_NOTHING(self)end
 
 ---------------MAIN MENU --------------------
 
 function NEW_GAME(self)
 	menu.destroy()
+	sfx = love.audio.newSource("audio/menu/new_game_sound.mp3", "static")
+	love.audio.play(sfx)
 	IN_PROCESS  = game.load()
 	
 end
