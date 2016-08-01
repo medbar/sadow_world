@@ -18,7 +18,7 @@ function love.load()
 	
 	options.load()  -- ченить придумать с хранением настроек 
 	love.window.setMode(options.resolution.w, options.resolution.h,options.graphics)
-		
+
 	IN_PROCESS = menu.load("main_menu")
 end
 
