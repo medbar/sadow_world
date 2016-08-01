@@ -17,7 +17,7 @@ function game.load()
 	game.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 	--
 	player.load()
-	level.load("")
+	level.load("testLevel")
 
 	return game
 end
@@ -47,7 +47,7 @@ function beginContact(a, b, coll)
 	if a:getUserData() == "player" or b:getUserData() == "player" then
 		local x, y = coll:getNormal()
 		if y > 0 then
-			player.jump = false
+			player.isjump = false
 		end
 	end
 end

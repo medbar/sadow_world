@@ -10,7 +10,7 @@ return {
 				init = ANIMATED_OBJECT,
 				x = 500,
 				y = 70,	
-				texture_name = "graphics/sun.png",
+				texture_name = "graphics/game/sun.png",
 				--    
 				-- ПЕРЕМЕННЫЕ ДЛЯ АНИМАЦИИ								
 				number_of_frames = 6,

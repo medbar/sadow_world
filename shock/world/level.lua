@@ -10,24 +10,26 @@ function level.load(level_directory)
 
 	level.directory = "levels/"..level_directory
 
-	level.background = require(level.directory.."background")
+	level.background = require(level.directory.."/background")
 
-	local ground =  require(level.directory.."ground")
-	level.ground = {}
-	for i,b in ipairs(ground) do 
-	table.insert(level.ground,{
-								body = love.physics.newBody(game.world, b.x, b.y, "static"),
-								shape = love.physics.newRectangleShape(b.w, b.h)	
-								}
-				)
-		love.physics.newFixture(level.ground[#level.ground].body,
-								level.ground[#level.ground].shape)
+	level.ground =  require(level.directory.."/ground")
+	INIT_COLLECTION(level,"ground")
+	for i,b in ipairs(level.ground) do 
+		b.body = love.physics.newBody(game.world, b.x, b.y, "static")
+
+		local v ={}
+		for j, point in ipairs(b.vertices) do
+			table.insert(v, point[1])
+			table.insert(v, point[2])
+		end
+		b.shape = love.physics.newPolygonShape(v) -- косяк	
+		love.physics.newFixture(b.body, b.shape)
 	end
 
-	level.decor = require(level.directory.."decor")
+	level.decor = require(level.directory.."/decor")
 	INIT_COLLECTION(level, "decor")
 
-	level.active_objects = require(level.directory.."active_objects")
+	level.active_objects = require(level.directory.."/active_objects")
 	--level.nps = require(love.directory.."nps")
 	--
 
@@ -61,9 +63,9 @@ end
 
 
 function level.DRAW_GROUND()
-	love.graphics.setColor(20,50,20)
+	love.graphics.setColor(255,255,255)
 	for i,block in ipairs(level.ground) do
-		love.graphics.polygon("fill",block.body:getWorldPoints(block.shape:getPoints()))
+		block.draw(block,textures)
 	end
 end
 

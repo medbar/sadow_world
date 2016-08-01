@@ -20,8 +20,11 @@ end
 -- init может быть:
 -- 				VOID - объекта нет
 -- 				POLYGON - объект, рисуемы с помошью функции love.graphics.polygon. Обязательные поля - mode = ("fill" or "line")
--- color = { r, g, b ,a},
--- vertices =  {x1,y1,x2,y2,...}
+--													 color = { r, g, b ,a},
+-- 													vertices =  {x1,y1,x2,y2,...}
+--				MESH_OBJECT - mesh с заданной текстурой. Обязательно:  texture_name, 
+--																		mode
+--																		vertices =  {x1,y1,x2,y2,...}
 -- 				IMAGE_OBJECT	- объект, загружающийся из картинки.
 -- 				ANIMATED_OBJECT	- анимированный объект, грузится из атласа.
 -- 				FROM_ATLAS	-   объект, загружающийся из атласа. Обязательные поля - width, height, xInPic, yInPic
@@ -39,6 +42,8 @@ end
 function DRAW_VOID(self)
 end
 
+
+
 function POLYGON(self)
 	self.draw = function(self)
 		love.graphics.setColor(self.color)
@@ -47,35 +52,25 @@ function POLYGON(self)
 
 end
 
-function FROM_ATLAS(self, textures)
-	self.quad = love.graphics.newQuad(self.xInPic, self.yInPic,
-	self.width, self.height,
-	textures[self.texture_name]:getDimensions())
 
-	if self.x < 1 and self.x > 0 then
-		self.draw = SCALE_DRAW_FROM_ATLAS
-	else
-		self.draw = DRAW_FROM_ATLAS
-	end
+
+function MESH_OBJECT(self,textures)
+		--CANNOT BE WITH SCALED_COORDS
+		self.draw = DRAW_MESH_OBJECT
+
+		textures[self.texture_name]:setWrap("repeat", "repeat") 
+		
+		self.mesh = love.graphics.newMesh(self.vertices, 
+											self.mode)
+		self.mesh:setTexture(textures[self.texture_name])
 end
 
+function DRAW_MESH_OBJECT(self, textures)
+	love.graphics.draw(self.mesh,self.x,self.y)
 
-function SCALE_DRAW_FROM_ATLAS(self, textures)
-	love.graphics.push()
-	love.graphics.origin()
-	love.graphics.draw(textures[self.texture_name],
-	self.quad,
-	self.x * options.resolution.w - textures[self.texture_name]:getWidth() / 2,
-	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2)
-	love.graphics.pop()
-end
+end	
 
-function DRAW_FROM_ATLAS(self, textures)
-	love.graphics.draw(textures[self.texture_name],
-	self.quad,
-	self.x,
-	self.y)
-end
+
 
 
 function IMAGE_OBJECT(self, textures)
@@ -100,6 +95,8 @@ function DRAW_IMAGE_OBJECT(self, textures)
 	self.x,
 	self.y)
 end
+
+
 
 
 function ANIMATED_OBJECT(self, textures)
@@ -155,6 +152,39 @@ function DRAW_ANIMATED_OBJ(self, textures)
 
 	love.graphics.draw(textures[self.texture_name],
 	self.quads[self.frameId],
+	self.x,
+	self.y)
+end
+
+
+
+
+function FROM_ATLAS(self, textures)
+	self.quad = love.graphics.newQuad(self.xInPic, self.yInPic,
+	self.width, self.height,
+	textures[self.texture_name]:getDimensions())
+
+	if self.x < 1 and self.x > 0 then
+		self.draw = SCALE_DRAW_FROM_ATLAS
+	else
+		self.draw = DRAW_FROM_ATLAS
+	end
+end
+
+
+function SCALE_DRAW_FROM_ATLAS(self, textures)
+	love.graphics.push()
+	love.graphics.origin()
+	love.graphics.draw(textures[self.texture_name],
+	self.quad,
+	self.x * options.resolution.w - textures[self.texture_name]:getWidth() / 2,
+	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2)
+	love.graphics.pop()
+end
+
+function DRAW_FROM_ATLAS(self, textures)
+	love.graphics.draw(textures[self.texture_name],
+	self.quad,
 	self.x,
 	self.y)
 end

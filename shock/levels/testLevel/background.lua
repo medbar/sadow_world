@@ -3,7 +3,7 @@
 -- по этому длина/ширина картинки должны быть в 2 раза меньше длины/ширины уровня 
 
 return {
-		texture = "graphics/sample_background.jpg",		
+		texture = "graphics/game/testLevel/bg.jpg",		
 		
 		-- другие характеристики фона( если они есть, а то я не придумал больше ничего)
 }
