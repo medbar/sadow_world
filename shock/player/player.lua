@@ -14,6 +14,14 @@ function player.load()
 	--
 end
 
+function  player.getX()
+	return player.body:getX()
+end
+
+function player.getY()
+	return player.body:getY()
+end
+
 function player.jump()
 	if not player.isjump then			
 		player.isjump = true
@@ -58,7 +66,7 @@ function player.draw()
 
 	
 	
-	--love.graphics.polygon("fill",player.body:getWorldPoints(player.shape:getPoints()))
+	love.graphics.polygon("fill",player.body:getWorldPoints(player.shape:getPoints())) --_DEBUG
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.draw(player.model, player.body:getX() - player.model:getWidth() / 2,
 	player.body:getY() - player.model:getHeight() / 2)

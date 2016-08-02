@@ -10,7 +10,8 @@ function level.load(level_directory)
 
 	level.directory = "levels/"..level_directory
 
-	level.background = require(level.directory.."/background")
+	level.bg = require(level.directory.."/background")
+	level.bg.texture = love.graphics.newImage(level.bg.texture_name)
 
 	level.ground =  require(level.directory.."/ground")
 	INIT_COLLECTION(level,"ground")
@@ -45,12 +46,21 @@ end
 
 
 function level.draw()
-	
+	level.DRAW_BG()
 	
 	level.DRAW_GROUND()
 
 	level.DRAW_DECOR()
 	
+end
+
+function level.DRAW_BG()
+	love.graphics.draw(level.bg.texture, 
+						player.getX()/2-options.resolution.w/2,
+						player.getY()/2-options.resolution.h/2,
+						0,
+						level.bg.width / level.bg.texture:getWidth(),
+						level.bg.height / level.bg.texture:getHeight())
 end
 
 function level.DRAW_DECOR()

@@ -9,6 +9,7 @@ function DEBUG_UPDATE()
 	DEBUG_INFO = DEBUG_INFO ..love.window.getPixelScale() .. "\n"
 	if IN_PROCESS == game then
 		DEBUG_INFO = DEBUG_INFO..player.body:getX() .. ", "..player.body:getY() .. "\n"
+		DEBUG_INFO = DEBUG_INFO ..player.body:getAngle().."\n"
 	elseif IN_PROCESS == menu then 
 		for i,h in ipairs(menu.history) do
 			DEBUG_INFO = DEBUG_INFO..h.." "

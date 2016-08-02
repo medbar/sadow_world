@@ -2,6 +2,9 @@
 
 function INIT_COLLECTION(self, collName)
 	for i, obj in ipairs(self[collName]) do
+		if obj.texture_name == nil then 
+			obj.texture_name = "graphics/sample_texture.bmp"
+		end
 		if obj.texture_name then
 			if not self.textures[obj.texture_name] then
 				self.textures[obj.texture_name] = love.graphics.newImage(obj.texture_name)
@@ -59,7 +62,14 @@ function MESH_OBJECT(self,textures)
 		self.draw = DRAW_MESH_OBJECT
 
 		textures[self.texture_name]:setWrap("repeat", "repeat") 
+		local w,h = textures[self.texture_name]:getDimensions()
 		
+		for i,v in ipairs(self.vertices)do
+			if v[3] == nil then
+				v[3] = v[1]/w
+				v[4] = v[2]/h
+			end
+		end
 		self.mesh = love.graphics.newMesh(self.vertices, 
 											self.mode)
 		self.mesh:setTexture(textures[self.texture_name])
