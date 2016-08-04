@@ -1,6 +1,6 @@
 ﻿-- ОСНОВНОЙ КЛАСС ДЛЯ НЕИГОВОГО ПРОЦЕССА
 --
-
+require "audio/playSounds"
 require "menu/actions"
 
 FONT_FOR_BOTTON = 21
@@ -24,6 +24,8 @@ function menu.load(menu_type)
 	menu.textures = { }
 	menu.background = love.graphics.newImage("graphics/menu/bg_" .. menu_type .. ".png")
 
+	if soundBG ~= nil then love.audio.stop(soundBG) end
+  	playSound(menu_type)
 	if menu_type == "options" then
 		return require(MENU_SCRIPTS_PATH .. menu_type)
 	end
@@ -131,4 +133,5 @@ function menu.destroy()
 	menu.elements = nil
 	menu.textures = nil
 	menu.background = nil
+	love.audio.stop()
 end
