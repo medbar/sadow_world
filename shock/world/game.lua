@@ -11,6 +11,7 @@ require "world/level"
 game = {}
 
 function game.load()
+	love.mouse.setVisible( false )
 		-- load physics
 	love.physics.setMeter(128)
 	game.world = love.physics.newWorld(0, 9.81 * 128, true)
@@ -23,14 +24,15 @@ function game.load()
 end
 
 function game.update(dt)
+	player.isjump = true
 	game.world:update(dt)
 	player.update(dt)
 	level.update(dt)
 end
 
 function game.draw()
-	love.graphics.translate(options.resolution.w / 2 - player.body:getX(),
-							 options.resolution.h / 2 - player.body:getY())
+	love.graphics.translate(options.resolution.w * player.scalePositionX - player.body:getX(),
+							 options.resolution.h * player.scalePositionY - player.body:getY())
 	level.draw()
 	player.draw()
 end
@@ -44,22 +46,32 @@ end
 
 
 function beginContact(a, b, coll)
+	-- if a:getUserData() == "player" or b:getUserData() == "player" then
+	-- 	local x, y = coll:getNormal()
+	-- 	if y > 0 then
+	-- 		player.isjump = false
+	-- 	end
+	-- end
+end
+ 
+ 
+function endContact(a, b, coll)
+	-- if a:getUserData() == "player" or b:getUserData() == "player" then
+	-- 	local x, y = coll:getNormal()
+	-- 	if y > 0 then
+	-- 		player.isjump = false
+	-- 	end
+	-- end
+end
+ 
+
+function preSolve(a, b, coll)
 	if a:getUserData() == "player" or b:getUserData() == "player" then
 		local x, y = coll:getNormal()
 		if y > 0 then
 			player.isjump = false
 		end
 	end
-end
- 
- 
-function endContact(a, b, coll)
-
-end
- 
-
-function preSolve(a, b, coll)
-
 end
  
 function postSolve(a, b, coll, normalimpulse, tangentimpulse)

@@ -91,12 +91,18 @@ function IMAGE_OBJECT(self, textures)
 	end
 end
 
-function SCALE_DRAW_IMAGE_OBJECT(self, textures)
+function SCALE_DRAW_IMAGE_OBJECT(self, textures,...)
+	-- if arg[2] == nil then 
+	-- 	arg = {0.5,1,1,0,0,0,0, n=7}
+
+	-- end	
 	love.graphics.push()
 	love.graphics.origin()
 	love.graphics.draw(textures[self.texture_name],
 	self.x * options.resolution.w - textures[self.texture_name]:getWidth() / 2,
-	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2)
+	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2,
+	self.r, self.sx,self.sy,self.ox,self.oy
+	)
 	love.graphics.pop()
 end
 
@@ -144,8 +150,9 @@ function SCALE_DRAW_ANIMATED_OBJ(self, textures)
 
 	love.graphics.draw(textures[self.texture_name],
 	self.quads[self.frameId],
-	self.x * options.resolution.w - textures[self.texture_name]:getWidth() / 2,
-	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2)
+	self.x * options.resolution.w - (textures[self.texture_name]:getWidth()/self.number_of_frames) / 2,
+	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2,
+	self.r, self.sx,self.sy,self.ox,self.oy)
 
 	love.graphics.pop()
 end

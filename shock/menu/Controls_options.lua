@@ -8,7 +8,7 @@ function DRAW_CONTOL_KEY(self)
 end
 
 local labelFont = 25
-local keyFont = 18
+local keyFont = FONT_FOR_BOTTON
 return {
 
 -- left
@@ -120,6 +120,6 @@ return {
 	init = INIT_VOID,
 },
 -- back
-{ x = 0.8, y = 0.9 , texture_name  = "graphics/menu/botton.bmp", text = "back",fontSize = 18, action = GO_BACK}		
+{ x = 0.8, y = 0.9 , texture_name  = "graphics/menu/botton.bmp", text = "back",fontSize = FONT_FOR_BOTTON, action = GO_BACK}		
 		
 }

@@ -3,6 +3,7 @@
 
 require "menu/actions"
 
+FONT_FOR_BOTTON = 21
 
 MENU_SCRIPTS_PATH = "menu/"
 
@@ -17,6 +18,7 @@ menu = {
 }
 
 function menu.load(menu_type)
+	love.mouse.setVisible( true )
 	table.insert(menu.history, menu_type)
 	menu.elements = { }
 	menu.textures = { }

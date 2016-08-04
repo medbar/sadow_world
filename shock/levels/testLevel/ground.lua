@@ -3,9 +3,22 @@
 
 
 return {	
+	--левая стенка 
+			{
+				texture_name = "graphics/game/cobble.jpg",
+				x = 0,
+				y = 350,
+				init = MESH_OBJECT, 
+				mode = "fan",
+				vertices = {{0, 0}, 
+							{0, 300},
+							{100, 300},
+							{100, 0}
+							},
+			},
 	--первый блок земли
 			{
-				texture_name = "graphics/game/grass.jpg",
+				texture_name = "graphics/game/dirt.jpg",
 				x = 0,
 				y = 650,
 				init = MESH_OBJECT, 
@@ -17,61 +30,64 @@ return {
 							{0, 200}
 							},
 						
-			},
-	--левая стенка 
+			},	
+			--правая стенка 
 			{
-				texture_name = "graphics/game/skyBlock.png",
-				x = 0,
-				y = 650/2,
+				texture_name = "graphics/game/cobble.jpg",
+				x = 650,
+				y = 450,
 				init = MESH_OBJECT, 
 				mode = "fan",
 				vertices = {{0, 0}, 
-							{0, -300},
-							{100, -300},
+							{0, 200},
+							{100, 200},
 							{100, 0}
 							},
 			},
-	-- --второй блок земли
-	-- 		{
-	-- 			texture_name = "graphics/game/dirt.jpg",
-	-- 			x = 950,
-	-- 			y = 900 - 50/2,
-	-- 			init = MESH_OBJECT, 
-	-- 			mode = "fan",
-	-- 			vertices = {{0, 0}, 
-	-- 						{300, 0},
-	-- 						{300, 100},
-	-- 						{0, 100}
-	-- 						},		
-	-- 		},
+	 --второй блок земли
+	 		{
+	 			texture_name = "graphics/game/dirt.jpg",
+	 			x = 950,
+	 			y = 650,
+	 			init = MESH_OBJECT, 
+	 			mode = "fan",
+	 			vertices = {
+	 						{0, 0},
+	 						{300,0}, 
+	 						{300, -100},
+	 						{400, -400},
+	 						{400, 200},
+	 						{0,200},
+	 						},		
+	 		},
 	-- блок, висящий в воздухе
 			{
-				texture_name = "graphics/game/cobble.jpg",
-				x= 950, 
+				texture_name = "graphics/game/skyBlock.png",
+				x= 1350, 
 				y =550,
 				init = MESH_OBJECT, 
 				mode = "fan", 
 				vertices = {	
 					{--left-top
-						-200, -50,
+						0, 0,
 						---2, -2
 					}, 
 					{--hill
-						0, -75,
+						200, -375,
 						--0, -3 
 					},
 					{--right-top
-						200, -50,
+						400, 0,
 						--2, -2,
 
 					},
 					{--right-bot
-						200, 50,
+						400, 50,
 						--2, 2,
 
 					},
 					{--left-bot
-						-200, 50,
+						0, 50,
 						---2, 2,
 					}, 
 							
