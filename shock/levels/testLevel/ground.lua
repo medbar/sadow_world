@@ -25,8 +25,8 @@ return {
 				mode = "fan", 
 				vertices = {
 							{0, 0},
-							{600, 0}, 							
-							{600, 200},
+							{4000, 0}, 							
+							{4000, 200},
 							{0, 200}
 							},
 						
@@ -48,7 +48,7 @@ return {
 	 		{
 	 			texture_name = "graphics/game/dirt.jpg",
 	 			x = 950,
-	 			y = 650,
+	 			y = 450,
 	 			init = MESH_OBJECT, 
 	 			mode = "fan",
 	 			vertices = {

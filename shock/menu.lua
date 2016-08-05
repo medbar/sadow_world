@@ -24,9 +24,9 @@ function menu.load(menu_type)
 	menu.textures = { }
 	menu.background = love.graphics.newImage("graphics/menu/bg_" .. menu_type .. ".png")
 
-	if menu_type == "options" then
-		return require(MENU_SCRIPTS_PATH .. menu_type)
-	end
+	-- if menu_type == "options" then
+	-- 	return require(MENU_SCRIPTS_PATH .. menu_type)
+	-- end
 	menu.elements = require(MENU_SCRIPTS_PATH .. menu_type)
 
 	for i, obj in ipairs(menu.elements) do
