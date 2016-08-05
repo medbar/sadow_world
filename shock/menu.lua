@@ -8,7 +8,8 @@ require "menu/actions"
 FONT_FOR_BOTTON = 20
 
 MENU_SCRIPTS_PATH = "menu/"
-
+MENU_MUSIC_PATH = "audio/menu/menu_sound.mp3"
+MENU_SELECTION_CLICK = "audio/menu/menu_selection_click.wav"
 menu = {
 	history = { },
 	previous = function()
@@ -26,9 +27,13 @@ function menu.load(menu_type)
 	menu.textures = { }
 	menu.background = love.graphics.newImage("graphics/menu/bg_" .. menu_type .. ".png")
 
+	if menu_type ~= "pause_menu" then 
+		menu.soundBG = MENU_MUSIC_PATH
+	else menu.soundBG = nill
+	end
 
-	if soundBG ~= nil then love.audio.stop(soundBG) end
-  	playSound(menu_type)
+	playSoundBG(menu.soundBG, "stream")
+
 	if menu_type == "options" then
 		return require(MENU_SCRIPTS_PATH .. menu_type)
 	end
@@ -58,13 +63,16 @@ function menu.update(dt)
 	-- fWINDOW_HEIGHT = ff
 	local mX = love.mouse.getX()
 	local mY = love.mouse.getY()
+	menu.oldfocus = menu.focus
 	menu.focus = 0
+
 	for i, b in ipairs(menu.elements) do
 		if not b.disableFocus then
 			if math.abs(mX - b.x * options.resolution.w) < menu.textures[b.texture_name]:getWidth() and
 				math.abs(mY - b.y * options.resolution.h) < menu.textures[b.texture_name]:getHeight()
 			then
 				menu.focus = i
+				if menu.focus ~= menu.oldfocus then playSound(MENU_SELECTION_CLICK ,"static") end
 				break
 			end
 		end

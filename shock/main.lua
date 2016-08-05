@@ -6,7 +6,7 @@
 -- option
 -- pause
 
-debug = true
+--debug = true
 
 
 require "my_debug"
@@ -62,6 +62,3 @@ function love.draw()
 
 	DEBUG_DRAW()
 end
-
-
-
