@@ -22,7 +22,7 @@ function player.load()
 	player.body:setSleepingAllowed( false )
 	player.shape = love.physics.newRectangleShape(player.hitBoxWidth,player.hitBoxHeight)
 	player.fixture = love.physics.newFixture(player.body, player.shape, 0)
-	player.fixture:setUserData("player")
+	player.fixture:setUserData(player)
 	player.fixture:setFriction(0.9)
 
 	--
@@ -133,3 +133,22 @@ end
 function player.destroy()
 
 end
+
+
+
+function player.beginContact(a, b, coll)
+	
+end
+ 
+ 
+
+ 
+
+function player.preSolve(curret, b, coll)
+		local x, y = coll:getNormal()
+		if y > 0 then
+			player.isjump = false
+		end
+	
+end
+ 

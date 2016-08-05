@@ -3,7 +3,9 @@
 require "audio/playSounds"
 require "menu/actions"
 
-FONT_FOR_BOTTON = 21
+
+ MAIN_FONT = "aMavickFont.ttf"
+FONT_FOR_BOTTON = 20
 
 MENU_SCRIPTS_PATH = "menu/"
 
@@ -34,7 +36,7 @@ function menu.load(menu_type)
 	menu.elements = require(MENU_SCRIPTS_PATH .. menu_type)
 
 	for i, obj in ipairs(menu.elements) do
-		local font = love.graphics.newFont(obj.fontSize)
+		local font = love.graphics.newFont(MAIN_FONT, obj.fontSize)
 		obj.TEXT = love.graphics.newText(font, obj.text)
 	end
 

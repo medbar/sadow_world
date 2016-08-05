@@ -46,32 +46,33 @@ end
 
 
 function beginContact(a, b, coll)
-	-- if a:getUserData() == "player" or b:getUserData() == "player" then
-	-- 	local x, y = coll:getNormal()
-	-- 	if y > 0 then
-	-- 		player.isjump = false
-	-- 	end
-	-- end
+	if a:getUserData().beginContact ~=nil then
+		a:getUserData().beginContact(a,b,coll)
+	end
+	if b:getUserData().beginContact ~=nil then
+		b:getUserData().beginContact(b,a,coll)
+	end
 end
  
  
 function endContact(a, b, coll)
-	-- if a:getUserData() == "player" or b:getUserData() == "player" then
-	-- 	local x, y = coll:getNormal()
-	-- 	if y > 0 then
-	-- 		player.isjump = false
-	-- 	end
-	-- end
+	if a:getUserData().endContact ~=nil then
+		a:getUserData().endContact(a,b,coll)
+	end
+	if b:getUserData().endContact ~=nil then
+		b:getUserData().endContact(b,a,coll)
+	end
 end
  
 
 function preSolve(a, b, coll)
-	if a:getUserData() == "player" or b:getUserData() == "player" then
-		local x, y = coll:getNormal()
-		if y > 0 then
-			player.isjump = false
-		end
+	if a:getUserData().preSolve ~=nil then
+		a:getUserData().preSolve(a,b,coll)
 	end
+	if b:getUserData().preSolve ~=nil then
+		b:getUserData().preSolve(b,a,coll)
+	end
+	
 end
  
 function postSolve(a, b, coll, normalimpulse, tangentimpulse)

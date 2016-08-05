@@ -17,7 +17,7 @@ return {
 	x = 0.3, 
 	y = 0.1,
 	texture_name = "graphics/menu/text.png",
-	text = "sample",
+	text = "",
 	fontSize = keyFont,
 	init = IMAGE_OBJECT,
 	drawText = DRAW_CONTOL_KEY,
@@ -29,7 +29,7 @@ return {
 	disableFocus = true,
 	x = 0.4, 
 	y = 0.1,
-	text = "left",
+	text = "Налево",
 	fontSize = labelFont,
 	init = INIT_VOID,
 },
@@ -51,7 +51,7 @@ return {
 	disableFocus = true,
 	x = 0.4, 
 	y = 0.25,
-	text = "left",
+	text = "Направо",
 	fontSize = labelFont,
 	init = INIT_VOID,
 },
@@ -72,7 +72,7 @@ return {
 	disableFocus = true,
 	x = 0.4, 
 	y = 0.4,
-	text = "jump",
+	text = "Прыжок",
 	fontSize = labelFont,
 	init = INIT_VOID,
 },
@@ -94,7 +94,7 @@ return {
 	disableFocus = true,
 	x = 0.4, 
 	y = 0.55,
-	text = "attack",
+	text = "Атака",
 	fontSize = labelFont,
 	init = INIT_VOID,
 },
@@ -115,11 +115,16 @@ return {
 	disableFocus = true,
 	x = 0.4, 
 	y = 0.7,
-	text = "pause",
+	text = "Пауза",
 	fontSize = labelFont,
 	init = INIT_VOID,
 },
 -- back
-{ x = 0.8, y = 0.9 , texture_name  = "graphics/menu/botton.bmp", text = "back",fontSize = FONT_FOR_BOTTON, action = GO_BACK}		
+{ 
+	x = 0.8, y = 0.9 , 
+	texture_name  = "graphics/menu/botton.bmp", 
+	text = "Назад",fontSize = FONT_FOR_BOTTON, 
+	action = GO_BACK
+},		
 		
 }

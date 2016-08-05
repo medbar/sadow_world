@@ -5,7 +5,7 @@ function INIT_COLLECTION(self, collName)
 		if obj.texture_name == nil then 
 			obj.texture_name = "graphics/sample_texture.bmp"
 		end
-		if obj.texture_name then
+		if obj.init ~= INIT_VOID then
 			if not self.textures[obj.texture_name] then
 				self.textures[obj.texture_name] = love.graphics.newImage(obj.texture_name)
 			end
