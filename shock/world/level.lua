@@ -67,6 +67,7 @@ function level.loadDialogs()
 	level.dialogs = require(level.directory.."/dialogs")
 		
 end
+
 function level.loadMobs(level_directory)
 	-- body
 end
@@ -76,6 +77,7 @@ end
 
 
 function level.draw()
+	love.graphics.setColor(255, 255, 255)
 	level.DRAW_BG()
 	
 	level.DRAW_GROUND()
@@ -120,4 +122,9 @@ end
 
 
 function level.destroy()
+end
+
+function GO_TO_DIALOG(ID)
+	game.state = "dialog"
+	dialogManager.load(level.dialogs[ID], level.dialogs.background)
 end

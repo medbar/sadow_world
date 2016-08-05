@@ -7,8 +7,8 @@ return {
 	{ 
 		x = 3800,
 		y = 300,
-		width = 200,
-		height = 200,
+		width = 150,
+		height = 150,
 		object_type = "static",
 		texture_name = "graphics/game/testLevel/flag.png",
 		init = IMAGE_OBJECT,
@@ -25,6 +25,10 @@ return {
 		height = 200,
 		object_type = "static",
 		init = INIT_VOID,
-		beginContact =  dialog
+		beginContact =  function(a,b,coll)
+							if b:getUserData() == player then
+								GO_TO_DIALOG("with_invisible_cube")
+							end
+						end
 	}
 }

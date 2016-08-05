@@ -5,12 +5,13 @@
 require "player/player"
 
 require "world/level"
-
+require "world/dialogManager"
 
   
 game = {}
 
 function game.load()
+	game.state = "inLevel"
 	love.mouse.setVisible( false )
 		-- load physics
 	love.physics.setMeter(128)
@@ -26,8 +27,12 @@ end
 function game.update(dt)
 	player.isjump = true
 	game.world:update(dt)
-	player.update(dt)
-	level.update(dt)
+	if game.state == "inLevel" then
+		player.update(dt)
+		level.update(dt)
+	elseif game.state == "dialog" then
+		dialogManager.update()
+	end
 end
 
 function game.draw()
@@ -35,6 +40,11 @@ function game.draw()
 							 options.resolution.h * player.scalePositionY - player.body:getY())
 	level.draw()
 	player.draw()
+
+	if game.state == "dialog" then 
+		dialogManager.draw()
+	end
+
 end
 
 
@@ -99,3 +109,6 @@ end
 function WIN()
 	IN_PROCESS = menu.load("win_menu")
 end
+
+
+

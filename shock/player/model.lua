@@ -10,9 +10,9 @@ return {
 			{
 				x = player.scalePositionX, 
 				y = player.scalePositionY,
-				texture_name = "graphics/game/main/GG.png",
-				init = ANIMATED_OBJECT,
-				number_of_frames = 2,
+				texture_name = "graphics/game/main/shock_stay.png",
+				init = IMAGE_OBJECT,
+				number_of_frames = 1,
 				frame_dt = 0.4,
 			},
 			--2
@@ -20,11 +20,11 @@ return {
 				x = player.scalePositionX, 
 				y = player.scalePositionY, 
 				init = ANIMATED_OBJECT,
-				texture_name = "graphics/game/main/run.png",
+				texture_name = "graphics/game/main/shock_run.png",
 				--    
 				-- ПЕРЕМЕННЫЕ ДЛЯ АНИМАЦИИ								
-				number_of_frames = 2,
-				frame_dt  = 0.20,
+				number_of_frames = 4,
+				frame_dt  = 0.10,
 				--
 			}
 			--3

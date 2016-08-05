@@ -15,8 +15,8 @@ function player.load()
 	player.isjump = false
 	-- physical character
 
-	player.hitBoxWidth =  120
-	player.hitBoxHeight = 110
+	player.hitBoxWidth =  100
+	player.hitBoxHeight = 170
 	player.maxV = 500
 	player.body = love.physics.newBody(game.world, 200, 200, "dynamic") -- started coordinate
 	player.body:setSleepingAllowed( false )
