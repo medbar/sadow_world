@@ -2,7 +2,10 @@
 
 function INIT_COLLECTION(self, collName)
 	for i, obj in ipairs(self[collName]) do
-		if obj.texture_name then
+		if obj.texture_name == nil then 
+			obj.texture_name = "graphics/sample_texture.bmp"
+		end
+		if obj.init ~= INIT_VOID then
 			if not self.textures[obj.texture_name] then
 				self.textures[obj.texture_name] = love.graphics.newImage(obj.texture_name)
 			end
@@ -59,7 +62,14 @@ function MESH_OBJECT(self,textures)
 		self.draw = DRAW_MESH_OBJECT
 
 		textures[self.texture_name]:setWrap("repeat", "repeat") 
+		local w,h = textures[self.texture_name]:getDimensions()
 		
+		for i,v in ipairs(self.vertices)do
+			if v[3] == nil then
+				v[3] = v[1]/w
+				v[4] = v[2]/h
+			end
+		end
 		self.mesh = love.graphics.newMesh(self.vertices, 
 											self.mode)
 		self.mesh:setTexture(textures[self.texture_name])
@@ -81,12 +91,18 @@ function IMAGE_OBJECT(self, textures)
 	end
 end
 
-function SCALE_DRAW_IMAGE_OBJECT(self, textures)
+function SCALE_DRAW_IMAGE_OBJECT(self, textures,...)
+	-- if arg[2] == nil then 
+	-- 	arg = {0.5,1,1,0,0,0,0, n=7}
+
+	-- end	
 	love.graphics.push()
 	love.graphics.origin()
 	love.graphics.draw(textures[self.texture_name],
 	self.x * options.resolution.w - textures[self.texture_name]:getWidth() / 2,
-	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2)
+	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2,
+	self.r, self.sx,self.sy,self.ox,self.oy
+	)
 	love.graphics.pop()
 end
 
@@ -134,8 +150,9 @@ function SCALE_DRAW_ANIMATED_OBJ(self, textures)
 
 	love.graphics.draw(textures[self.texture_name],
 	self.quads[self.frameId],
-	self.x * options.resolution.w - textures[self.texture_name]:getWidth() / 2,
-	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2)
+	self.x * options.resolution.w - (textures[self.texture_name]:getWidth()/self.number_of_frames) / 2,
+	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2,
+	self.r, self.sx,self.sy,self.ox,self.oy)
 
 	love.graphics.pop()
 end

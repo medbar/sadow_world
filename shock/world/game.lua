@@ -5,12 +5,14 @@
 require "player/player"
 
 require "world/level"
-
+require "world/dialogManager"
 
   
 game = {}
 
 function game.load()
+	game.state = "inLevel"
+	love.mouse.setVisible( false )
 		-- load physics
 	love.physics.setMeter(128)
 	game.world = love.physics.newWorld(0, 9.81 * 128, true)
@@ -23,16 +25,26 @@ function game.load()
 end
 
 function game.update(dt)
+	player.isjump = true
 	game.world:update(dt)
-	player.update(dt)
-	level.update(dt)
+	if game.state == "inLevel" then
+		player.update(dt)
+		level.update(dt)
+	elseif game.state == "dialog" then
+		dialogManager.update()
+	end
 end
 
 function game.draw()
-	love.graphics.translate(options.resolution.w / 2 - player.body:getX(),
-							 options.resolution.h / 2 - player.body:getY())
+	love.graphics.translate(options.resolution.w * player.scalePositionX - player.body:getX(),
+							 options.resolution.h * player.scalePositionY - player.body:getY())
 	level.draw()
 	player.draw()
+
+	if game.state == "dialog" then 
+		dialogManager.draw()
+	end
+
 end
 
 
@@ -44,22 +56,33 @@ end
 
 
 function beginContact(a, b, coll)
-	if a:getUserData() == "player" or b:getUserData() == "player" then
-		local x, y = coll:getNormal()
-		if y > 0 then
-			player.isjump = false
-		end
+	if a:getUserData().beginContact ~=nil then
+		a:getUserData().beginContact(a,b,coll)
+	end
+	if b:getUserData().beginContact ~=nil then
+		b:getUserData().beginContact(b,a,coll)
 	end
 end
  
  
 function endContact(a, b, coll)
-
+	if a:getUserData().endContact ~=nil then
+		a:getUserData().endContact(a,b,coll)
+	end
+	if b:getUserData().endContact ~=nil then
+		b:getUserData().endContact(b,a,coll)
+	end
 end
  
 
 function preSolve(a, b, coll)
-
+	if a:getUserData().preSolve ~=nil then
+		a:getUserData().preSolve(a,b,coll)
+	end
+	if b:getUserData().preSolve ~=nil then
+		b:getUserData().preSolve(b,a,coll)
+	end
+	
 end
  
 function postSolve(a, b, coll, normalimpulse, tangentimpulse)
@@ -86,3 +109,6 @@ end
 function WIN()
 	IN_PROCESS = menu.load("win_menu")
 end
+
+
+

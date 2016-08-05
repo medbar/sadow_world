@@ -8,8 +8,8 @@ return {
 			{	
 				-- ОБЯЗАТЕЛЬНЫЕ ПЕРЕМЕННЫЕ 
 				init = ANIMATED_OBJECT,
-				x = 500,
-				y = 70,	
+				x = 200,
+				y = 450,	
 				texture_name = "graphics/game/sun.png",
 				--    
 				-- ПЕРЕМЕННЫЕ ДЛЯ АНИМАЦИИ								

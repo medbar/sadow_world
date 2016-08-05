@@ -8,6 +8,7 @@
 
 debug = true
 
+
 require "my_debug"
 require "options"
 require "Animation"
