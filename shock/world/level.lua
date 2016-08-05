@@ -23,6 +23,19 @@ function level.load(level_directory)
 
 	level.loadMobs(level_directory)
 
+	level.bullets = {
+	delete = function(bullet)
+		bullet.fixture:destroy()
+		bullet.body:destroy()
+		for i,obj in ipairs(level.bullets) do
+			if obj == bullet then
+				table.remove(level.bullets,i)
+				return
+			end
+		end
+	end 
+	}
+
 	level.frameCounter = 0 
 
 end
@@ -72,6 +85,24 @@ function level.loadMobs(level_directory)
 	-- body
 end
 
+function level.newBullet(x, y, vx, vy, texture, direction, damage)
+	local bullet = {
+			texture = texture,
+			body = love.physics.newBody(game.world,x,y,"dynamic"),
+			shape = love.physics.newRectangleShape(texture:getDimensions()),
+			beginContact = BULLET_CONTACT,
+			direction = direction,
+			damage = damage,
+		}
+		bullet.fixture  = love.physics.newFixture(bullet.body, bullet.shape)
+		bullet.body:setBullet(true)
+		bullet.body:setMass(30)
+		bullet.body:setGravityScale(0)
+		bullet.body:setLinearVelocity(vx*direction,vy)
+		bullet.fixture:setUserData(bullet)
+	table.insert(level.bullets,bullet)
+end
+
 function level.update(dt)
 end
 
@@ -84,6 +115,7 @@ function level.draw()
 
 	level.DRAW_DECOR()
 	level.DRAW_ACTVE()
+	level.DRAW_BULLETS()
 	
 end
 
@@ -119,6 +151,16 @@ function level.DRAW_ACTVE()
 	end
 end 
 
+function level.DRAW_BULLETS()
+	love.graphics.setColor(255,255,255)
+
+	for i,obj in ipairs(level.bullets) do
+		love.graphics.draw(obj.texture,
+							obj.body:getX(), obj.body:getY(),
+		 					0, obj.direction, 1)
+	end
+
+end
 
 
 function level.destroy()

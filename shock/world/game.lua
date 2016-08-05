@@ -112,3 +112,16 @@ end
 
 
 
+
+function BULLET_CONTACT(a, b, coll)
+	local target = b:getUserData()
+	if b:isSensor() then
+		return
+	end
+	if target.takingDamage ~= nil then
+		target.takingDamage(a:getUserData().damage)
+	end
+	level.bullets.delete(a:getUserData())
+end
+
+

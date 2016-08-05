@@ -3,6 +3,12 @@ player = { }
 
 function player.load()
 
+	--игровые характеристики
+	player.hp = 100
+	player.attackspeed = 0.2 -- в секундах
+	player.lastAttack = love.timer.getTime()
+	player.bulletSpeed = 200
+	player.damage = 10
 	-- load model
 	player.direction = -1 -- -1 - налево, 1 - направо
 	player.scalePositionX =  0.5
@@ -10,7 +16,7 @@ function player.load()
 	player.model = require("player/model")
 	player.textures = {}
 	INIT_COLLECTION(player, "model")
-
+	player.textures.bullet = love.graphics.newImage(player.model.bullet)
 
 	player.isjump = false
 	-- physical character
@@ -81,6 +87,15 @@ function player.moveRight()
 	player.body:applyForce(force, 0)	
 end
 
+function  player.attack()
+	if player.attackspeed < (love.timer.getTime() - player.lastAttack) then
+		player.lastAttack = love.timer.getTime()
+		level.newBullet(player.getX()+100*player.direction, player.getY(),
+						player.bulletSpeed, 0,
+						player.textures.bullet, player.direction, player.damage)
+	end
+end
+
 function player.update(dt)
 
 	-- ограничиваем скорость 
@@ -95,6 +110,11 @@ function player.update(dt)
 	if love.keyboard.isDown(options.controls.jump) then
 		player.jump()
 	end
+
+	if  love.keyboard.isDown(options.controls.attack) then
+		player.attack()
+	end
+
 	if love.keyboard.isDown(options.controls.pause) then
 		PAUSE()
 	end
@@ -109,7 +129,7 @@ function player.draw()
 	love.graphics.setColor(255, 255, 255)
 	local pS = 1
 	if player.isjump then
-
+		pS = 3
 	elseif math.abs(player.body:getLinearVelocity()) <10 then
 		pS = 1
 	else 
@@ -152,3 +172,9 @@ function player.preSolve(curret, b, coll)
 	
 end
  
+function player.takingDamage(dmg)
+	player.hp = player.hp - dmg
+	if player.hp <= 0 then 
+		LOSE()
+	end
+end

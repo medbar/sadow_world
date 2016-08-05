@@ -12,7 +12,11 @@ return {
 		object_type = "static",
 		texture_name = "graphics/game/testLevel/flag.png",
 		init = IMAGE_OBJECT,
-		beginContact = WIN
+		beginContact = function(a,b,coll)
+							if b:getUserData() == player then
+								WIN()
+							end
+						end
 	},
 		--
 		--  и другие объекты 
@@ -26,7 +30,8 @@ return {
 		object_type = "static",
 		init = INIT_VOID,
 		beginContact =  function(a,b,coll)
-							if b:getUserData() == player then
+							if b:getUserData() == player and not a:getUserData().isrepeat then
+								a:getUserData().isrepeat = true
 								GO_TO_DIALOG("with_invisible_cube")
 							end
 						end
