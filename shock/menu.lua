@@ -4,7 +4,7 @@ require "audio/playSounds"
 require "menu/actions"
 
 
- MAIN_FONT = "aMavickFont.ttf"
+MAIN_FONT = "aMavickFont.ttf"
 FONT_FOR_BOTTON = 20
 
 MENU_SCRIPTS_PATH = "menu/"
@@ -26,17 +26,9 @@ function menu.load(menu_type)
 	menu.elements = { }
 	menu.textures = { }
 	menu.background = love.graphics.newImage("graphics/menu/bg_" .. menu_type .. ".png")
+  menu.soundBG = MENU_MUSIC_PATH
 
-	if menu_type ~= "pause_menu" then 
-		menu.soundBG = MENU_MUSIC_PATH
-	else menu.soundBG = nill
-	end
-
-	playSoundBG(menu.soundBG, "stream")
-
-	if menu_type == "options" then
-		return require(MENU_SCRIPTS_PATH .. menu_type)
-	end
+	playSoundBG(menu.soundBG, menu_type)
 
 	menu.elements = require(MENU_SCRIPTS_PATH .. menu_type)
 
@@ -47,12 +39,8 @@ function menu.load(menu_type)
 
 	INIT_COLLECTION(menu, "elements")
 
-
-
-
 	menu.focus = 0
 	-- botton in focus index
-
 
 	return menu
 end
@@ -72,12 +60,15 @@ function menu.update(dt)
 				math.abs(mY - b.y * options.resolution.h) < menu.textures[b.texture_name]:getHeight()
 			then
 				menu.focus = i
-				if menu.focus ~= menu.oldfocus then playSound(MENU_SELECTION_CLICK ,"static") end
+				if menu.focus ~= menu.oldfocus then 
+          playSound(MENU_SELECTION_CLICK ,"static") 
+        end
 				break
 			end
 		end
 	end
 end
+
 
 function menu.draw()
 	-- draw background
@@ -86,7 +77,6 @@ function menu.draw()
 	love.graphics.draw(menu.background, 0, 0, 0,
 	options.resolution.w / menu.background:getWidth(),
 	options.resolution.h / menu.background:getHeight())
-	--
 
 	-- draw elements
 	for i, b in ipairs(menu.elements) do
@@ -130,14 +120,12 @@ function menu.mousepressed(x, y, botton)
 	end
 end
 
+
 function menu.mousereleased(x, y, botton)
 	if menu.focus ~= 0 then
 		menu.elements[menu.focus]:action()
 	end
 end
-
-
-
 
 
 function menu.destroy()
