@@ -15,6 +15,7 @@ require "Animation"
 require "world/game"
 require "menu"
 
+
 function love.load()
 	
 	options.load()  -- ченить придумать с хранением настроек 
@@ -23,15 +24,27 @@ function love.load()
 	IN_PROCESS = menu.load("main_menu")
 end
 
+-- function love.keypressed(key,s, isre) 
+-- if IN_PROCESS.keypressed then 
+-- 		IN_PROCESS.keypressed(key,s,isre)
+-- 	end
+-- end
+
+function love.keyreleased(key) 
+if IN_PROCESS.keyreleased then 
+		IN_PROCESS.keyreleased(key)
+	end
+end
+
 function love.mousepressed(x,y, botton) 
 if IN_PROCESS.mousepressed then 
-		menu.mousepressed(x, y, botton)
+		IN_PROCESS.mousepressed(x, y, botton)
 	end
 end
 
 function love.mousereleased(x, y, botton)
 	if IN_PROCESS.mousereleased then 
-		menu.mousereleased(x, y, botton)
+		IN_PROCESS.mousereleased(x, y, botton)
 	end
 end
 

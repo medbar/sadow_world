@@ -6,11 +6,13 @@ require "player/player"
 
 require "world/level"
 require "world/dialogManager"
-
+require "world/enemyManager"
   
 game = {}
 
 function game.load()
+	game.random = love.math.newRandomGenerator()
+	game.random:setSeed(os.time())
 	game.state = "inLevel"
 	love.mouse.setVisible( false )
 		-- load physics
@@ -21,18 +23,66 @@ function game.load()
 	player.load()
 	level.load("testLevel")
 
+
+
+	game.bullets = {
+	delete = function(bullet)
+		bullet.fixture:destroy()
+		bullet.body:destroy()
+		for i,obj in ipairs(game.bullets) do
+			if obj == bullet then
+				table.remove(game.bullets,i)
+				return
+			end
+		end
+	end 
+	}
+
+	--enemyManager.load("testLevel")
+
+
 	return game
 end
+
+
+
+function game.newBullet(x, y, vx, vy, texture, direction, damage)
+	local bullet = {
+			texture = texture,
+			body = love.physics.newBody(game.world,x,y,"dynamic"),
+			shape = love.physics.newRectangleShape(texture:getDimensions()),
+			beginContact = BULLET_CONTACT,
+			direction = direction,
+			damage = damage,
+		}
+		bullet.fixture  = love.physics.newFixture(bullet.body, bullet.shape)
+		bullet.body:setBullet(true)
+		bullet.body:setMass(30)
+		bullet.body:setGravityScale(0)
+		bullet.body:setLinearVelocity(vx*direction,vy)
+		bullet.fixture:setUserData(bullet)
+		--bullet.fixture:setSensor(true)
+		bullet.fixture:setGroupIndex(SHOCK_INDEX)
+	table.insert(game.bullets,bullet)
+end
+
+
+
+
+
 
 function game.update(dt)
 	player.isjump = true
 	game.world:update(dt)
 	if game.state == "inLevel" then
 		player.update(dt)
+	--	enemyManager.update()
 		level.update(dt)
 	elseif game.state == "dialog" then
 		dialogManager.update()
 	end
+
+
 end
 
 function game.draw()
@@ -40,13 +90,26 @@ function game.draw()
 							 options.resolution.h * player.scalePositionY - player.body:getY())
 	level.draw()
 	player.draw()
-
+	--enemyManager.draw()
+	game.DRAW_BULLETS()
 	if game.state == "dialog" then 
 		dialogManager.draw()
 	end
 
 end
 
+
+
+function game.DRAW_BULLETS()
+	love.graphics.setColor(255,255,255)
+
+	for i,obj in ipairs(game.bullets) do
+		love.graphics.draw(obj.texture,
+							obj.body:getX(), obj.body:getY(),
+		 					0, obj.direction, 1)
+	end
+
+end
 
 function game.destroy()
 	game.world:destroy()
@@ -99,6 +162,7 @@ end
 
 function PAUSE()
 	IN_PROCESS = menu.load("pause_menu")
+	menu.escRepeat = true 
 end
 
 function LOSE()
@@ -119,9 +183,11 @@ function BULLET_CONTACT(a, b, coll)
 		return
 	end
 	if target.takingDamage ~= nil then
-		target.takingDamage(a:getUserData().damage)
+		if not target:takingDamage(a:getUserData().damage) then
+			return
+		end
 	end
-	level.bullets.delete(a:getUserData())
+	game.bullets.delete(a:getUserData())
 end
 
 

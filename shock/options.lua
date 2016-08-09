@@ -60,11 +60,11 @@ function options.generateNew()
 	------------
 
 	-- GTRAPHICS -- 
-	options.resolutionId = 3
+	options.resolutionId = 1
 	options.graphics = {
 						fullscreen = false,
 						resizable  = true,
-						fullscreentype = "exclusive",
+						fullscreentype = "desktop",
 						highdpi = true,
 						}
 	
@@ -76,8 +76,8 @@ function options.generateNew()
 
 	-- CONTROLS --
 	options.controls = {
-						left = "left",
-						right = "right",
+						left = "a",
+						right = "d",
 						jump = "space",
 						attack = "k",
 						pause = "escape",

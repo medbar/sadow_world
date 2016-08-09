@@ -84,6 +84,10 @@ end
 
 
 function IMAGE_OBJECT(self, textures)
+	if self.x == nill then 
+		self.draw =  DRAW_IMAGE_OBJECT
+		return 
+	end
 	if self.x < 1 and self.x > 0 then
 		self.draw = SCALE_DRAW_IMAGE_OBJECT
 	else
@@ -91,7 +95,11 @@ function IMAGE_OBJECT(self, textures)
 	end
 end
 
-function SCALE_DRAW_IMAGE_OBJECT(self, textures,...)
+function SCALE_DRAW_IMAGE_OBJECT(self, textures,x,y)
+	if x == nil then 
+		x = self.x
+		y = self.y
+	end
 	-- if arg[2] == nil then 
 	-- 	arg = {0.5,1,1,0,0,0,0, n=7}
 
@@ -99,17 +107,21 @@ function SCALE_DRAW_IMAGE_OBJECT(self, textures,...)
 	love.graphics.push()
 	love.graphics.origin()
 	love.graphics.draw(textures[self.texture_name],
-	self.x * options.resolution.w - textures[self.texture_name]:getWidth() / 2,
-	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2,
+	x * options.resolution.w - textures[self.texture_name]:getWidth() / 2,
+	y * options.resolution.h - textures[self.texture_name]:getHeight() / 2,
 	self.r, self.sx,self.sy,self.ox,self.oy
 	)
 	love.graphics.pop()
 end
 
-function DRAW_IMAGE_OBJECT(self, textures)
+function DRAW_IMAGE_OBJECT(self, textures,x,y)
+	if x == nil then 
+		x = self.x
+		y = self.y
+	end
 	love.graphics.draw(textures[self.texture_name],
-	self.x,
-	self.y)
+	x,y,
+	self.r, self.sx,self.sy,self.ox,self.oy)
 end
 
 
@@ -129,6 +141,11 @@ function ANIMATED_OBJECT(self, textures)
 	end
 
 
+	if self.x == nill then 
+		self.draw =  DRAW_ANIMATED_OBJ
+		return 
+	end
+
 	if self.x < 1 and self.x > 0 then
 		self.draw = SCALE_DRAW_ANIMATED_OBJ
 	else
@@ -136,7 +153,11 @@ function ANIMATED_OBJECT(self, textures)
 	end
 end
 
-function SCALE_DRAW_ANIMATED_OBJ(self, textures)
+function SCALE_DRAW_ANIMATED_OBJ(self, textures,x,y)
+	if x == nil then 
+		x = self.x
+		y = self.y
+	end
 	love.graphics.push()
 	love.graphics.origin()
 	local time = love.timer.getTime()
@@ -150,14 +171,18 @@ function SCALE_DRAW_ANIMATED_OBJ(self, textures)
 
 	love.graphics.draw(textures[self.texture_name],
 	self.quads[self.frameId],
-	self.x * options.resolution.w - (textures[self.texture_name]:getWidth()/self.number_of_frames) / 2,
-	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2,
+	x * options.resolution.w - (textures[self.texture_name]:getWidth()/self.number_of_frames) / 2,
+	y * options.resolution.h - textures[self.texture_name]:getHeight() / 2,
 	self.r, self.sx,self.sy,self.ox,self.oy)
 
 	love.graphics.pop()
 end
 
-function DRAW_ANIMATED_OBJ(self, textures)
+function DRAW_ANIMATED_OBJ(self, textures,x,y)
+	if x == nil then 
+		x = self.x
+		y = self.y
+	end
 	local time = love.timer.getTime()
 	if time - self.timer > self.frame_dt then
 		self.timer = time
@@ -169,8 +194,8 @@ function DRAW_ANIMATED_OBJ(self, textures)
 
 	love.graphics.draw(textures[self.texture_name],
 	self.quads[self.frameId],
-	self.x,
-	self.y)
+	x,y,
+	self.r, self.sx,self.sy,self.ox,self.oy)
 end
 
 

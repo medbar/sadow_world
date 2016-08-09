@@ -32,6 +32,8 @@ return {
 		text = "Назад", fontSize = FONT_FOR_BOTTON, 
 		action = GO_BACK
 	},
+
+	escape = 4, -- кнопка, забитая на escape
 		--
 		-- сюды можно вписать новые кнопки по примерам
 		

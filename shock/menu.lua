@@ -21,6 +21,11 @@ menu = {
 }
 
 function menu.load(menu_type)
+
+	--menu.oldKeypressed = love.keypressed
+	--love.keypressed = menu.keypressed
+
+
 	love.mouse.setVisible( true )
 	table.insert(menu.history, menu_type)
 	menu.elements = { }
@@ -72,9 +77,24 @@ function menu.update(dt)
 				math.abs(mY - b.y * options.resolution.h) < menu.textures[b.texture_name]:getHeight()
 			then
 				menu.focus = i
-				if menu.focus ~= menu.oldfocus then playSound(MENU_SELECTION_CLICK ,"static") end
+				if menu.focus ~= menu.oldfocus then 
+					playSound(MENU_SELECTION_CLICK ,"static")
+				end
 				break
 			end
+		end
+	end
+end
+
+
+
+function menu.keyreleased(key)
+	if key == "escape" and menu.elements.escape ~= nil then
+		if 	not menu.escRepeat then 
+			menu.focus = menu.elements.escape
+			menu.elements[menu.focus]:action()
+		else
+				menu.escRepeat = nil
 		end
 	end
 end
@@ -133,6 +153,7 @@ end
 function menu.mousereleased(x, y, botton)
 	if menu.focus ~= 0 then
 		menu.elements[menu.focus]:action()
+
 	end
 end
 
@@ -141,6 +162,8 @@ end
 
 
 function menu.destroy()
+	--love.keypressed = menu.oldKeypressed
+	menu.escRepeat = nil 
 	menu.history = { }
 	menu.elements = nil
 	menu.textures = nil

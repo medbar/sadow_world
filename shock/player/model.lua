@@ -6,12 +6,12 @@ return {
 			-- [2] - бег(в лево)
 			-- [3] - прыжок 
 			-- [4] - атака(обычная)
-			-- [4 + №атаки] - атаки необычные
+			-- [5] - получение урона
+			-- [5 + №атаки] - атаки необычные
 			
 			--1
 			{
-				x = player.scalePositionX, 
-				y = player.scalePositionY,
+
 				texture_name = "graphics/game/main/shock_stay.png",
 				init = IMAGE_OBJECT,
 				number_of_frames = 1,
@@ -19,8 +19,7 @@ return {
 			},
 			--2
 			{	
-				x = player.scalePositionX, 
-				y = player.scalePositionY, 
+				
 				init = ANIMATED_OBJECT,
 				texture_name = "graphics/game/main/shock_run.png",
 				--    
@@ -31,8 +30,7 @@ return {
 			},
 			--3
 			{
-				x = player.scalePositionX, 
-				y = player.scalePositionY,
+				
 				texture_name = "graphics/game/main/jump.png",
 				init = IMAGE_OBJECT,
 				number_of_frames = 1,
@@ -40,12 +38,25 @@ return {
 			},
 			--4
 			{
-				x = player.scalePositionX, 
-				y = player.scalePositionY,
+				
 				texture_name = "graphics/game/main/shock_stay.png",
 				init = IMAGE_OBJECT,
 				number_of_frames = 1,
 				frame_dt = 0.4,
+			},
+			--5
+			{
+				
+				texture_name = "graphics/game/main/shock_damage.png",
+				init = function()end,
+				draw = function(self, textures)
+					love.graphics.setColor(80*game.random:random(10,40),
+											0,0,220)
+					SCALE_DRAW_IMAGE_OBJECT(self,textures)	
+				end,
+
+				number_of_frames = 1,
+				frame_dt = 0.1,
 			},
 			
 }

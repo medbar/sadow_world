@@ -11,7 +11,7 @@ local labelFont = 25
 local keyFont = FONT_FOR_BOTTON
 return {
 
--- left
+-- [1]left
 {
 	name = "left",
 	x = 0.3, 
@@ -24,7 +24,7 @@ return {
 	action = CHANGE_CONTROL_KEY
 },
 
---lable
+--[2]lable
 {
 	disableFocus = true,
 	x = 0.4, 
@@ -34,7 +34,7 @@ return {
 	init = INIT_VOID,
 },
 
--- right
+-- [3]right
 {
 	name = "right",
 	x = 0.3, 
@@ -46,7 +46,7 @@ return {
 	drawText = DRAW_CONTOL_KEY,
 	action = CHANGE_CONTROL_KEY
 },
---lable
+--[4]lable
 {
 	disableFocus = true,
 	x = 0.4, 
@@ -55,7 +55,7 @@ return {
 	fontSize = labelFont,
 	init = INIT_VOID,
 },
- -- jump
+ --[5] jump
 {
 	name = "jump",
 	x = 0.3, 
@@ -67,7 +67,7 @@ return {
 	drawText = DRAW_CONTOL_KEY,
 	action =  CHANGE_CONTROL_KEY
 },
---lable
+--[6]lable
 {
 	disableFocus = true,
 	x = 0.4, 
@@ -76,7 +76,7 @@ return {
 	fontSize = labelFont,
 	init = INIT_VOID,
 },
---attack
+--[7]attack
 {
 	name = "attack",
 	x = 0.3, 
@@ -89,7 +89,7 @@ return {
 	action = CHANGE_CONTROL_KEY
 
 },
---lable
+--[8]lable
 {
 	disableFocus = true,
 	x = 0.4, 
@@ -98,7 +98,7 @@ return {
 	fontSize = labelFont,
 	init = INIT_VOID,
 },
---pause
+--[9]pause
 {
 	name = "pause",
 	x = 0.3, 
@@ -110,7 +110,7 @@ return {
 	drawText = DRAW_CONTOL_KEY,
 	action =  CHANGE_CONTROL_KEY
 },
---lable
+--[10]lable
 {
 	disableFocus = true,
 	x = 0.4, 
@@ -119,12 +119,12 @@ return {
 	fontSize = labelFont,
 	init = INIT_VOID,
 },
--- back
+-- [11]back
 { 
 	x = 0.8, y = 0.9 , 
 	texture_name  = "graphics/menu/botton.bmp", 
 	text = "Назад",fontSize = FONT_FOR_BOTTON, 
 	action = GO_BACK
 },		
-		
+		escape = 11, -- кнопка, забитая на escape
 }

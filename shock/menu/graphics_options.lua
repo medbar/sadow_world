@@ -1,7 +1,7 @@
 
 return {
 
-	-- Fullscreen	
+	--[1] Fullscreen	
 	{
 		x = 0.3,
 		y = 0.1,
@@ -35,7 +35,7 @@ return {
 
 --
 
-	-- resolution left
+	--[2] resolution left
 	{
 		x = 0.25, 
 		y = 0.3,
@@ -47,7 +47,7 @@ return {
 		action = RESOLUTION_REDUCE
 	},
 
-	-- resolution left
+	--[3] resolution left
 	{
 		x = 0.45, 
 		y = 0.3,
@@ -59,7 +59,7 @@ return {
 		action = RESOLUTION_INCREASE
 	},
 
- 	--resolution
+ 	--[4] resolution
 	{
 		x = 0.33,
 		y = 0.3,
@@ -83,12 +83,14 @@ return {
 
 	},
 
+	--[5]
 	{ 
 		x = 0.8, y = 0.9 , 
 		texture_name  = "graphics/menu/botton.bmp", 
 		text = "Назад",fontSize = FONT_FOR_BOTTON, 
 		action = GO_BACK
-	},				
+	},	
+	escape = 5, -- кнопка, забитая на escape			
 }
 
 

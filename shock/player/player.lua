@@ -5,10 +5,12 @@ function player.load()
 
 	--игровые характеристики
 	player.hp = 100
-	player.attackspeed = 0.2 -- в секундах
-	player.lastAttack = love.timer.getTime()
-	player.bulletSpeed = 200
+	player.attackspeed = 1 -- в секундах
+	player.bulletSpeed = 1200
 	player.damage = 10
+
+	player.lastAttack = 0
+	player.lastDamage = 0
 	-- load model
 	player.direction = -1 -- -1 - налево, 1 - направо
 	player.scalePositionX =  0.5
@@ -30,6 +32,7 @@ function player.load()
 	player.fixture = love.physics.newFixture(player.body, player.shape, 0)
 	player.fixture:setUserData(player)
 	player.fixture:setFriction(0.9)
+	player.fixture:setGroupIndex(SHOCK_INDEX)
 
 	--
 end
@@ -90,7 +93,8 @@ end
 function  player.attack()
 	if player.attackspeed < (love.timer.getTime() - player.lastAttack) then
 		player.lastAttack = love.timer.getTime()
-		level.newBullet(player.getX()+100*player.direction, player.getY(),
+		game.newBullet(player.getX(), -- + player.hitBoxWidth/2*player.direction,
+						 player.getY()+32,
 						player.bulletSpeed, 0,
 						player.textures.bullet, player.direction, player.damage)
 	end
@@ -98,25 +102,37 @@ end
 
 function player.update(dt)
 
-	-- ограничиваем скорость 
 	
+	
+	 player.pS = 1
+	if 	(love.timer.getTime() - player.lastDamage) < (player.model[4].number_of_frames * player.model[4].frame_dt) then 
+		player.pS = 5
+	elseif player.isjump then
+		player.pS = 3
+	elseif math.abs(player.body:getLinearVelocity()) <10 then
+		player.pS = 1
+	else	
+		player.pS = 2
+	end 
 
-	if love.keyboard.isDown(options.controls.left) then
-		player.moveLeft()
-	end
-	if love.keyboard.isDown(options.controls.right) then
-		player.moveRight()
-	end
-	if love.keyboard.isDown(options.controls.jump) then
-		player.jump()
-	end
+	if player.pS ~= 5 then
+		if love.keyboard.isDown(options.controls.left) then
+			player.moveLeft()
+		end
+		if love.keyboard.isDown(options.controls.right) then
+			player.moveRight()	
+		end
+		if love.keyboard.isDown(options.controls.jump) then
+			player.jump()
+		end
 
-	if  love.keyboard.isDown(options.controls.attack) then
-		player.attack()
-	end
+		if  love.keyboard.isDown(options.controls.attack) then
+			player.attack()
+		end
 
-	if love.keyboard.isDown(options.controls.pause) then
-		PAUSE()
+		if love.keyboard.isDown(options.controls.pause) then
+			PAUSE()
+		end
 	end
 end
 
@@ -124,29 +140,22 @@ end
 function player.draw()
 
 	
-	
+	local Pwidth = (player.textures[player.model[player.pS].texture_name]:getWidth()/player.model[player.pS].number_of_frames)
 	--love.graphics.polygon("fill",player.body:getWorldPoints(player.shape:getPoints())) --_DEBUG
 	love.graphics.setColor(255, 255, 255)
-	local pS = 1
-	if player.isjump then
-		pS = 3
-	elseif math.abs(player.body:getLinearVelocity()) <10 then
-		pS = 1
-	else 
-		pS = 2
-	end 
-
-	player.model[pS].r = 0
-	player.model[pS].sx = player.direction
-	player.model[pS].sy = 1 
+	player.model[player.pS].r = 0
+	player.model[player.pS].sx = player.direction
+	player.model[player.pS].sy = 1 
 	if player.direction ==-1 then
-		player.model[pS].ox = (player.textures[player.model[pS].texture_name]:getWidth()/player.model[pS].number_of_frames)
+		player.model[player.pS].ox = Pwidth
 	else
-		player.model[pS].ox = 0
+		player.model[player.pS].ox = 0
 	end
 
-	player.model[pS].oy = 0
-	player.model[pS]:draw(player.textures)
+	player.model[player.pS].oy = 0
+	player.model[player.pS]:draw(player.textures,
+									player.getX() - Pwidth/ 2 ,
+									player.getY() - player.textures[player.model[player.pS].texture_name]:getHeight() / 2 )
 
 end
 
@@ -172,9 +181,14 @@ function player.preSolve(curret, b, coll)
 	
 end
  
-function player.takingDamage(dmg)
-	player.hp = player.hp - dmg
-	if player.hp <= 0 then 
-		LOSE()
+function player:takingDamage(dmg)
+	player.lastDamage = love.timer.getTime()
+	if player.pS ~= 5 then 
+		player.hp = player.hp - dmg
+		if player.hp <= 0 then 
+			LOSE()
+		end
+		return true -- если пуля попала 
 	end
+	return false -- мы неуязвимы 
 end
