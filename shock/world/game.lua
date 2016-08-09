@@ -38,7 +38,7 @@ function game.load()
 	end 
 	}
 
-	--enemyManager.load("testLevel")
+	enemyManager.load("testLevel")
 
 
 	return game
@@ -57,7 +57,7 @@ function game.newBullet(x, y, vx, vy, texture, direction, damage)
 		}
 		bullet.fixture  = love.physics.newFixture(bullet.body, bullet.shape)
 		bullet.body:setBullet(true)
-		bullet.body:setMass(30)
+		bullet.body:setMass(300)
 		bullet.body:setGravityScale(0)
 		bullet.body:setLinearVelocity(vx*direction,vy)
 		bullet.fixture:setUserData(bullet)
@@ -90,7 +90,7 @@ function game.draw()
 							 options.resolution.h * player.scalePositionY - player.body:getY())
 	level.draw()
 	player.draw()
-	--enemyManager.draw()
+	enemyManager.draw()
 	game.DRAW_BULLETS()
 	if game.state == "dialog" then 
 		dialogManager.draw()

@@ -26,7 +26,7 @@ function enemyManager.newEnemy(args)
 	enemy.phys.fixture:setUserData(enemy)
 	enemy.phys.body:setSleepingAllowed(false)
 	enemy.textures = {}
-	INIT_COLLECTION(enemy,model)
+	INIT_COLLECTION(enemy,"model")
 	--enemy.model[2].texture_name = "graphics/sample_texture.bmp"
 	--enemy.textures["graphics/sample_texture.bmp"] = love.graphics.newImage(enemy.model[2].texture_name)
 	--enemy.model[2]:init(enemy.textures)		
@@ -55,7 +55,10 @@ end
 
 function enemyManager.draw()
 	for i,obj in ipairs(enemyManager.enemies) do 
-		obj.model[2]:draw(obj.textures, obj.phys.body:getX(),obj.phys.body:getY())
+		local Pwidth = (obj.textures[obj.model[1].texture_name]:getWidth()/obj.model[1].number_of_frames)
+		obj.model[1]:draw(obj.textures, obj.phys.body:getX() - Pwidth/ 2,
+										obj.phys.body:getY() - obj.textures[obj.model[1].texture_name]:getHeight() / 2 )
+
 	end
 end
 
@@ -64,16 +67,19 @@ function enemyManager.destroy()
 end
 
 function ENEMY_TAKING_DAMAGE(self, dmg)
-	self.characteristics.hp = sellf.characteristics.hp - dmg
-	if 	sellf.characteristics.hp <=0 then 
-		self:die()
-	end
+	-- self.characteristics.hp = self.characteristics.hp - dmg
+	-- if 	self.characteristics.hp <=0 then 
+	-- 	self:die()
+	-- end
+
+	-- return true
+
 end
 
 
 function ENEMY_DIE(self)
-	bullet.fixture:destroy()
-	bullet.body:destroy()
+	self.phys.fixture:destroy()
+	self.phys.body:destroy()
 	table.remove(enemyManager.enemies,self.ID)
 end
 

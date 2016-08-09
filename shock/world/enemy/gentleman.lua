@@ -10,7 +10,7 @@ function GENTLEMAN() return {
 			
 			--1
 			{
-				texture_name = "graphics/game/main/shock_stay.png",
+				texture_name = "graphics/game/enemies/gentleman.png",
 				init = IMAGE_OBJECT,
 				number_of_frames = 1,
 				frame_dt = 0.4,
@@ -30,9 +30,10 @@ function GENTLEMAN() return {
 	characteristics = {
 		stepForce = 2000,
 		hp = 100,
+			
 		bloodLust = 0,
-		width = 100,
-		height = 100,
+		width = 110,
+		height = 150,
 		maxV = 200,
 	},
 

@@ -11,7 +11,7 @@ function player.load()
 
 	--игровые характеристики
 	player.hp = 100
-	player.attackspeed = 1 -- в секундах
+	player.attackspeed = 0.8 -- в секундах
 	player.bulletSpeed = 1200
 	player.damage = 10
 
@@ -53,8 +53,9 @@ end
 
 function player.jump()
 	if (not player.isjump) then
-	local x,y = player.body:getLinearVelocity() 
-	--player.isjump = true			
+	local x,y = player.body:getLinearVelocity() 	
+	playRunSound(GAME_JUMP_SOUND, "static")
+
 	player.body:setLinearVelocity(x, -800)
 			-- player.body:applyLinearImpulse(0,-20)
 			-- player.body:applyForce(0,-2000)
@@ -63,6 +64,7 @@ function player.jump()
 end
 
 function player.moveLeft()
+	--player.runSound = playRunSound(GAME_RUN_SOUND, "static")
 	local Vx, Vy = player.body:getLinearVelocity()
 	player.direction = -1
 	if  -Vx > player.maxV then 
@@ -80,6 +82,7 @@ function player.moveLeft()
 end
 
 function player.moveRight()
+	-- player.runSound = playRunSound(GAME_RUN_SOUND, "static")
 	local Vx, Vy = player.body:getLinearVelocity()
 	player.direction = 1
 	if  Vx > player.maxV then 
@@ -98,6 +101,8 @@ end
 
 function  player.attack()
 	if player.attackspeed < (love.timer.getTime() - player.lastAttack) then
+		playRunSound(GAME_GUN_SOUND , "static")
+
 		player.lastAttack = love.timer.getTime()
 		game.newBullet(player.getX(), -- + player.hitBoxWidth/2*player.direction,
 						 player.getY()+32,
@@ -125,23 +130,23 @@ function player.update(dt)
 	if player.pS ~= 5 then
 		if love.keyboard.isDown(options.controls.left) then
 			player.moveLeft()
-   			-- player.runSound = playRunSound(GAME_RUN_SOUND, "static")
+   			
 		end
 		if love.keyboard.isDown(options.controls.right) then
 			player.moveRight()
-   	 		--player.runSound = playRunSound(GAME_RUN_SOUND, "static")
+   	 		
 		end
 		if love.keyboard.isDown(options.controls.jump) then
 			player.jump()
   		 	 --if player.runSound ~= nil then
 		   	   --player.runSound:stop()
 		   	 --end
- 	  		playRunSound(GAME_JUMP_SOUND, "static")
+ 	  		
 		end
 
 		if  love.keyboard.isDown(options.controls.attack) then
 			player.attack()
-  	  		playRunSound(GAME_GUN_SOUND , "static")
+  	  	
 		end
 
 
