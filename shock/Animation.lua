@@ -42,9 +42,10 @@ end
 function INIT_VOID(self)
 	self.draw = DRAW_VOID
 end
+
+
 function DRAW_VOID(self)
 end
-
 
 
 function POLYGON(self)
@@ -54,7 +55,6 @@ function POLYGON(self)
 	end
 
 end
-
 
 
 function MESH_OBJECT(self,textures)
@@ -75,12 +75,11 @@ function MESH_OBJECT(self,textures)
 		self.mesh:setTexture(textures[self.texture_name])
 end
 
+
 function DRAW_MESH_OBJECT(self, textures)
 	love.graphics.draw(self.mesh,self.x,self.y)
 
 end	
-
-
 
 
 function IMAGE_OBJECT(self, textures)
@@ -95,11 +94,13 @@ function IMAGE_OBJECT(self, textures)
 	end
 end
 
+
 function SCALE_DRAW_IMAGE_OBJECT(self, textures,x,y)
 	if x == nil then 
 		x = self.x
 		y = self.y
 	end
+
 	-- if arg[2] == nil then 
 	-- 	arg = {0.5,1,1,0,0,0,0, n=7}
 
@@ -114,17 +115,17 @@ function SCALE_DRAW_IMAGE_OBJECT(self, textures,x,y)
 	love.graphics.pop()
 end
 
+
 function DRAW_IMAGE_OBJECT(self, textures,x,y)
 	if x == nil then 
 		x = self.x
 		y = self.y
 	end
+
 	love.graphics.draw(textures[self.texture_name],
 	x,y,
 	self.r, self.sx,self.sy,self.ox,self.oy)
 end
-
-
 
 
 function ANIMATED_OBJECT(self, textures)
@@ -153,11 +154,13 @@ function ANIMATED_OBJECT(self, textures)
 	end
 end
 
+
 function SCALE_DRAW_ANIMATED_OBJ(self, textures,x,y)
 	if x == nil then 
 		x = self.x
 		y = self.y
 	end
+
 	love.graphics.push()
 	love.graphics.origin()
 	local time = love.timer.getTime()
@@ -183,6 +186,7 @@ function DRAW_ANIMATED_OBJ(self, textures,x,y)
 		x = self.x
 		y = self.y
 	end
+
 	local time = love.timer.getTime()
 	if time - self.timer > self.frame_dt then
 		self.timer = time
@@ -197,8 +201,6 @@ function DRAW_ANIMATED_OBJ(self, textures,x,y)
 	x,y,
 	self.r, self.sx,self.sy,self.ox,self.oy)
 end
-
-
 
 
 function FROM_ATLAS(self, textures)
@@ -223,6 +225,7 @@ function SCALE_DRAW_FROM_ATLAS(self, textures)
 	self.y * options.resolution.h - textures[self.texture_name]:getHeight() / 2)
 	love.graphics.pop()
 end
+
 
 function DRAW_FROM_ATLAS(self, textures)
 	love.graphics.draw(textures[self.texture_name],

@@ -1,7 +1,6 @@
 ﻿
 
 									 
-		
 function DEBUG_UPDATE()
 	DEBUG_INFO = "debug info:\n"
 	if IN_PROCESS == game then
@@ -16,6 +15,7 @@ function DEBUG_UPDATE()
 		DEBUG_INFO = DEBUG_INFO.."\n"
 	end
 end
+
 
 function DEBUG_DRAW()
 	love.graphics.push()

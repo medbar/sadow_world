@@ -1,4 +1,10 @@
 ﻿
+require "audio/playSounds"
+
+GAME_GUN_SOUND = "audio/game/gun_sound.mp3"
+GAME_RUN_SOUND = "audio/game/run_sound.wav"
+GAME_JUMP_SOUND = "audio/game/jump_sound.mp3"
+
 player = { }
 
 function player.load()
@@ -115,20 +121,29 @@ function player.update(dt)
 		player.pS = 2
 	end 
 
+
 	if player.pS ~= 5 then
 		if love.keyboard.isDown(options.controls.left) then
 			player.moveLeft()
+   			-- player.runSound = playRunSound(GAME_RUN_SOUND, "static")
 		end
 		if love.keyboard.isDown(options.controls.right) then
-			player.moveRight()	
+			player.moveRight()
+   	 		--player.runSound = playRunSound(GAME_RUN_SOUND, "static")
 		end
 		if love.keyboard.isDown(options.controls.jump) then
 			player.jump()
+  		 	 --if player.runSound ~= nil then
+		   	   --player.runSound:stop()
+		   	 --end
+ 	  		playRunSound(GAME_JUMP_SOUND, "static")
 		end
 
 		if  love.keyboard.isDown(options.controls.attack) then
 			player.attack()
+  	  		playRunSound(GAME_GUN_SOUND , "static")
 		end
+
 
 		if love.keyboard.isDown(options.controls.pause) then
 			PAUSE()

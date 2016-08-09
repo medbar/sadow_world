@@ -15,7 +15,6 @@ options.resolutionsTable = {
 
 
 function options.load()
-	
 	-- в идеале надо сделать загрузку из файла, но пока что в лоаде будет формирование новых настроек
 	if OPTION_FILE then 
 		--не существующий блок кода
@@ -29,6 +28,7 @@ end
 function options.save()
 
 end
+
 
 function options.changeResolution(increase)
 	if increase then 
@@ -44,13 +44,12 @@ function options.changeResolution(increase)
 			options.resolution.h = options.resolutionsTable[options.resolutionId].h
 		end
 	end
+  
 	love.window.setMode(options.resolution.w, options.resolution.h,options.graphics)
 end
 
 
-
 function options.generateNew()
-
 	-- SOUNDS --
 	options.sound = {
 						Vmusic = 100,
@@ -95,5 +94,3 @@ function options.generateNew()
 						}
 	--------------
 end
-
-
