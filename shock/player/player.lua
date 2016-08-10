@@ -37,7 +37,7 @@ function player.load()
 	player.shape = love.physics.newRectangleShape(player.hitBoxWidth,player.hitBoxHeight)
 	player.fixture = love.physics.newFixture(player.body, player.shape, 0)
 	player.fixture:setUserData(player)
-	player.fixture:setFriction(0.9)
+
 	player.fixture:setGroupIndex(SHOCK_INDEX)
 
 	--
@@ -56,7 +56,7 @@ function player.jump()
 	local x,y = player.body:getLinearVelocity() 	
 	playRunSound(GAME_JUMP_SOUND, "static")
 
-	player.body:setLinearVelocity(x, -800)
+	player.body:setLinearVelocity(x, -700)
 			-- player.body:applyLinearImpulse(0,-20)
 			-- player.body:applyForce(0,-2000)
 	--end
@@ -107,7 +107,7 @@ function  player.attack()
 		game.newBullet(player.getX(), -- + player.hitBoxWidth/2*player.direction,
 						 player.getY()+32,
 						player.bulletSpeed, 0,
-						player.textures.bullet, player.direction, player.damage)
+						player.textures.bullet, player.direction, player.damage,  SHOCK_INDEX)
 	end
 end
 
@@ -161,7 +161,7 @@ function player.draw()
 
 	
 	local Pwidth = (player.textures[player.model[player.pS].texture_name]:getWidth()/player.model[player.pS].number_of_frames)
-	--love.graphics.polygon("fill",player.body:getWorldPoints(player.shape:getPoints())) --_DEBUG
+	love.graphics.polygon("fill",player.body:getWorldPoints(player.shape:getPoints())) --_DEBUG
 	love.graphics.setColor(255, 255, 255)
 	player.model[player.pS].r = 0
 	player.model[player.pS].sx = player.direction
@@ -184,6 +184,9 @@ function player.destroy()
 end
 
 
+function player.die()
+	LOSE()
+end
 
 function player.beginContact(a, b, coll)
 	

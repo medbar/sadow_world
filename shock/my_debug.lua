@@ -1,5 +1,5 @@
 ﻿
-
+DEBUG_STATIC = ""
 									 
 function DEBUG_UPDATE()
 	DEBUG_INFO = "debug info:\n"
@@ -20,6 +20,6 @@ end
 function DEBUG_DRAW()
 	love.graphics.push()
 	love.graphics.origin()
-	love.graphics.print(DEBUG_INFO,10,10)
+	love.graphics.print(DEBUG_STATIC..'\n'..DEBUG_INFO,10,10)
 	love.graphics.pop()
 end

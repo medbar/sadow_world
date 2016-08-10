@@ -31,35 +31,36 @@ return {
 							},
 						
 			},	
-			--правая стенка 
+			-- дальняя платформа
 			{
 				texture_name = "graphics/game/cobble.jpg",
-				x = 650,
-				y = 450,
+				x = 4300,
+				y = 750,
 				init = MESH_OBJECT, 
 				mode = "fan",
-				vertices = {{0, 0}, 
-							{0, 200},
-							{100, 200},
-							{100, 0}
+				vertices = {
+							{0, 0}, 
+							{600, 0},
+							{600, 200},
+							{0, 200}
 							},
 			},
 	 --второй блок земли
-	 		{
-	 			texture_name = "graphics/game/dirt.jpg",
-	 			x = 950,
-	 			y = 450,
-	 			init = MESH_OBJECT, 
-	 			mode = "fan",
-	 			vertices = {
-	 						{0, 0},
-	 						{300,0}, 
-	 						{300, -100},
-	 						{400, -400},
-	 						{400, 200},
-	 						{0,200},
-	 						},		
-	 		},
+	 		-- {
+	 		-- 	texture_name = "graphics/game/dirt.jpg",
+	 		-- 	x = 950,
+	 		-- 	y = 450,
+	 		-- 	init = MESH_OBJECT, 
+	 		-- 	mode = "fan",
+	 		-- 	vertices = {
+	 		-- 				{0, 0},
+	 		-- 				{300,0}, 
+	 		-- 				{300, -100},
+	 		-- 				{400, -400},
+	 		-- 				{400, 200},
+	 		-- 				{0,200},
+	 		-- 				},		
+	 		-- },
 	-- блок, висящий в воздухе
 			{
 				texture_name = "graphics/game/skyBlock.png",
@@ -73,7 +74,7 @@ return {
 						---2, -2
 					}, 
 					{--hill
-						200, -375,
+						200, 0,
 						--0, -3 
 					},
 					{--right-top

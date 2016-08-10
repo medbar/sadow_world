@@ -28,27 +28,32 @@ function GENTLEMAN() return {
 
 	},
 	characteristics = {
-		stepForce = 2000,
+		stepForce = 1000,
 		hp = 100,
 			
-		bloodLust = 0,
+		bloodLust = 200,
 		width = 110,
 		height = 150,
-		maxV = 200,
+		maxVx = 200,
 	},
 
 	tergets = { 
 		AVOID_DEATH_TARGET, 
+
 		CATCH_UP_PLAYER_TARGET,
+		STOP_TARGET,
+		
 	},
 	
 
 	--jump = ENEMY_JUMP,
-	step = SINGLE_ENEMY_STEP,
+	step = ENEMY_STOP,
 	stepLeft = ENEMY_LEFT,
 	stepRight = ENEMY_RIGHT,
 	takingDamage = ENEMY_TAKING_DAMAGE,
 	die = ENEMY_DIE,
+
+	preSolve = JUMP_ON_THE_UMBRELLA
 }
 
 end

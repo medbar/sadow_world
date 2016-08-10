@@ -46,7 +46,7 @@ end
 
 
 
-function game.newBullet(x, y, vx, vy, texture, direction, damage)
+function game.newBullet(x, y, vx, vy, texture, direction, damage, groupID)
 	local bullet = {
 			texture = texture,
 			body = love.physics.newBody(game.world,x,y,"dynamic"),
@@ -57,12 +57,12 @@ function game.newBullet(x, y, vx, vy, texture, direction, damage)
 		}
 		bullet.fixture  = love.physics.newFixture(bullet.body, bullet.shape)
 		bullet.body:setBullet(true)
-		bullet.body:setMass(300)
+		bullet.body:setMass(30)
 		bullet.body:setGravityScale(0)
 		bullet.body:setLinearVelocity(vx*direction,vy)
 		bullet.fixture:setUserData(bullet)
 		--bullet.fixture:setSensor(true)
-		bullet.fixture:setGroupIndex(SHOCK_INDEX)
+		bullet.fixture:setGroupIndex(groupID)
 	table.insert(game.bullets,bullet)
 end
 
@@ -76,7 +76,7 @@ function game.update(dt)
 	game.world:update(dt)
 	if game.state == "inLevel" then
 		player.update(dt)
-	--	enemyManager.update()
+		enemyManager.update()
 		level.update(dt)
 	elseif game.state == "dialog" then
 		dialogManager.update()
@@ -113,6 +113,7 @@ end
 
 function game.destroy()
 	game.world:destroy()
+	
 	level.destroy()
 	player.destroy()
 end

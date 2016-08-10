@@ -49,6 +49,8 @@ function level.loadGround(level_directory)
 		b.shape = love.physics.newPolygonShape(v)	
 		b.fixture = love.physics.newFixture(b.body, b.shape)
 		b.fixture:setUserData(b)
+
+		b.fixture:setFriction(0.9)
 		b.fixture:setGroupIndex(GROUND_INDEX)
 	end
 end
@@ -134,6 +136,8 @@ end
 
 
 function level.destroy()
+	dialogManager.destroy()
+
 end
 
 function GO_TO_DIALOG(ID)
