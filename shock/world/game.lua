@@ -14,14 +14,14 @@ function game.load()
 	game.random = love.math.newRandomGenerator()
 	game.random:setSeed(os.time())
 	game.state = "inLevel"
-	love.mouse.setVisible( false )
+	--love.mouse.setVisible( false )
 		-- load physics
 	love.physics.setMeter(128)
 	game.world = love.physics.newWorld(0, 9.81 * 128, true)
 	game.world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 	--
 	player.load()
-	level.load("testLevel")
+	level.load("London")
 
 
 
@@ -38,7 +38,7 @@ function game.load()
 	end 
 	}
 
-	enemyManager.load("testLevel")
+
 
 
 	return game
@@ -120,6 +120,10 @@ end
 
 
 function beginContact(a, b, coll)
+	if a:getUserData() == player then
+		a, b = b, a
+	end
+
 	if a:getUserData().beginContact ~=nil then
 		a:getUserData().beginContact(a,b,coll)
 	end
@@ -130,6 +134,9 @@ end
  
  
 function endContact(a, b, coll)
+	if a:getUserData() == player then
+		a, b = b, a
+	end
 	if a:getUserData().endContact ~=nil then
 		a:getUserData().endContact(a,b,coll)
 	end
@@ -140,6 +147,10 @@ end
  
 
 function preSolve(a, b, coll)
+	if a:getUserData() == player then
+		a, b = b, a
+	end
+
 	if a:getUserData().preSolve ~=nil then
 		a:getUserData().preSolve(a,b,coll)
 	end
@@ -192,3 +203,15 @@ function BULLET_CONTACT(a, b, coll)
 end
 
 
+function PLATFORM_CONTACT(a,b,coll)
+	local xn, yn = coll:getNormal()
+ 	a:getUserData().platformEnable[b] = (yn > 0)	
+end
+
+function PLATFORM_PRE_SLOVE(a,b,coll)
+	coll:setEnabled(a:getUserData().platformEnable[b])
+end
+
+function PLATFORM_END_CONACT(a,b,coll)
+
+end

@@ -27,7 +27,7 @@ function level.load(level_directory)
 
 	level.loadMobs(level_directory)
 
-	
+	enemyManager.load("levels/"..level_directory)
 
 	level.frameCounter = 0 
 
@@ -41,12 +41,20 @@ function level.loadGround(level_directory)
 	for i,b in ipairs(level.ground) do 
 		b.body = love.physics.newBody(game.world, b.x, b.y, "static")
 
-		local v ={}
-		for j, point in ipairs(b.vertices) do
-			table.insert(v, point[1])
-			table.insert(v, point[2])
+		
+		if b.init == MESH_OBJECT then
+			
+			local v ={}
+			for j, point in ipairs(b.vertices) do
+				table.insert(v, point[1])
+				table.insert(v, point[2])	
+			end
+			b.shape = love.physics.newPolygonShape(v)
+		else 
+			b.shape = love.physics.newRectangleShape(b.hitbox_ox,b.hitbox_oy,b.width, b.height) 
 		end
-		b.shape = love.physics.newPolygonShape(v)	
+
+		
 		b.fixture = love.physics.newFixture(b.body, b.shape)
 		b.fixture:setUserData(b)
 
@@ -90,24 +98,27 @@ end
 function level.draw()
 	love.graphics.setColor(255, 255, 255)
 	level.DRAW_BG()
-	
+		
+	level.DRAW_DECOR()
 	level.DRAW_GROUND()
 
-	level.DRAW_DECOR()
 	level.DRAW_ACTVE()
-
-
 	
 end
+
 
 function level.DRAW_BG()
 	love.graphics.draw(level.bg.texture, 
-						player.getX()/2-options.resolution.w/2,
-						player.getY()/2-options.resolution.h/2,
+						player.getX()/3-options.resolution.w/2,
+						player.getY()/6-options.resolution.h/2,
 						0,
 						level.bg.width / level.bg.texture:getWidth(),
-						level.bg.height / level.bg.texture:getHeight())
+						level.bg.height / level.bg.texture:getHeight()
+						,600, 600
+						)
 end
+
+
 
 function level.DRAW_DECOR()
 
@@ -121,7 +132,7 @@ end
 function level.DRAW_GROUND()
 	love.graphics.setColor(255,255,255)
 	for i,block in ipairs(level.ground) do
-		block.draw(block,textures)
+		block.draw(block,level.textures)
 	end
 end
 

@@ -134,10 +134,11 @@ end
 
 function JUMP_ON_THE_UMBRELLA(a,b,coll)
 	local xn,yn = coll:getNormal()
-	if xn < yn then
+	--if math.abs(xn) < math.abs(yn) then
+	if yn >0 then 
 		if b:getUserData() == player then
 			local x,y = player.body:getLinearVelocity() 	
-			player.body:setLinearVelocity(x, -800)
+			player.body:setLinearVelocity(x, -y-50)
 		end
 	end
 end

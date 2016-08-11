@@ -83,6 +83,7 @@ end
 
 
 function IMAGE_OBJECT(self, textures)
+	self.frameWidth = textures[self.texture_name]:getWidth()
 	if self.x == nill then 
 		self.draw =  DRAW_IMAGE_OBJECT
 		return 
@@ -123,7 +124,8 @@ function DRAW_IMAGE_OBJECT(self, textures,x,y)
 	end
 
 	love.graphics.draw(textures[self.texture_name],
-	x,y,
+	x - textures[self.texture_name]:getWidth() / 2,
+	y - textures[self.texture_name]:getHeight() / 2,
 	self.r, self.sx,self.sy,self.ox,self.oy)
 end
 
@@ -136,9 +138,9 @@ function ANIMATED_OBJECT(self, textures)
 
 	self.quads = { }
 	local imgW, imgH = textures[self.texture_name]:getDimensions()
-	local CadrWidth = imgW / self.number_of_frames
-	for x = 0, imgW, CadrWidth do
-		table.insert(self.quads, love.graphics.newQuad(x, 0, CadrWidth, imgH, imgW, imgH))
+	self.frameWidth = imgW / self.number_of_frames
+	for x = 0, imgW, self.frameWidth do
+		table.insert(self.quads, love.graphics.newQuad(x, 0, self.frameWidth, imgH, imgW, imgH))
 	end
 
 
@@ -174,7 +176,7 @@ function SCALE_DRAW_ANIMATED_OBJ(self, textures,x,y)
 
 	love.graphics.draw(textures[self.texture_name],
 	self.quads[self.frameId],
-	x * options.resolution.w - (textures[self.texture_name]:getWidth()/self.number_of_frames) / 2,
+	x * options.resolution.w - (self.frameWidth/self.number_of_frames) / 2,
 	y * options.resolution.h - textures[self.texture_name]:getHeight() / 2,
 	self.r, self.sx,self.sy,self.ox,self.oy)
 
@@ -198,7 +200,8 @@ function DRAW_ANIMATED_OBJ(self, textures,x,y)
 
 	love.graphics.draw(textures[self.texture_name],
 	self.quads[self.frameId],
-	x,y,
+	x - self.frameWidth / 2,
+	y - textures[self.texture_name]:getHeight() / 2,
 	self.r, self.sx,self.sy,self.ox,self.oy)
 end
 

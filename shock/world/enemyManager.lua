@@ -6,7 +6,7 @@ require "world/enemy/gentleman"
 
 function enemyManager.load(level_name)
 	enemyManager.enemies = {}
- 	local preE = require("levels/"..level_name.."/enemies")
+ 	local preE = require(level_name.."/enemies")
 	for i,obj in ipairs(preE) do
 		enemyManager.newEnemy(obj)
 	end
@@ -63,19 +63,19 @@ end
 
 function enemyManager.draw()
 	for i,obj in ipairs(enemyManager.enemies) do 
-		local Pwidth = (obj.textures[obj.model[1].texture_name]:getWidth()/obj.model[1].number_of_frames)
+		--local Pwidth = (obj.textures[obj.model[1].texture_name]:getWidth()/obj.model[1].number_of_frames)
 		obj.model[1].r = 0
 		obj.model[1].sx = obj.direction
 		obj.model[1].sy = 1 
 		if obj.direction ==-1 then
-		obj.model[1].ox = Pwidth
+		obj.model[1].ox = obj.model[1].frameWidth
 		else
 		obj.model[1].ox = 0
 		end
 		obj.model[1].oy = 0
-		love.graphics.polygon("fill",obj.phys.body:getWorldPoints(obj.phys.shape:getPoints())) --_DEBUG
-		obj.model[1]:draw(obj.textures, obj.phys.body:getX() - Pwidth/ 2,
-										obj.phys.body:getY() - obj.textures[obj.model[1].texture_name]:getHeight() / 2 )
+		--love.graphics.polygon("fill",obj.phys.body:getWorldPoints(obj.phys.shape:getPoints())) --_DEBUG
+		obj.model[1]:draw(obj.textures, obj.phys.body:getX(),
+										obj.phys.body:getY())
 
 	end
 end

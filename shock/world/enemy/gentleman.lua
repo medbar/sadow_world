@@ -28,10 +28,10 @@ function GENTLEMAN() return {
 
 	},
 	characteristics = {
-		stepForce = 1000,
+		stepForce = 700,
 		hp = 100,
 			
-		bloodLust = 200,
+		bloodLust = 600,
 		width = 110,
 		height = 150,
 		maxVx = 200,

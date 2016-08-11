@@ -56,7 +56,7 @@ function player.jump()
 	local x,y = player.body:getLinearVelocity() 	
 	playRunSound(GAME_JUMP_SOUND, "static")
 
-	player.body:setLinearVelocity(x, -700)
+	player.body:setLinearVelocity(x, -800)
 			-- player.body:applyLinearImpulse(0,-20)
 			-- player.body:applyForce(0,-2000)
 	--end
@@ -160,22 +160,22 @@ end
 function player.draw()
 
 	
-	local Pwidth = (player.textures[player.model[player.pS].texture_name]:getWidth()/player.model[player.pS].number_of_frames)
-	love.graphics.polygon("fill",player.body:getWorldPoints(player.shape:getPoints())) --_DEBUG
+	
+	--love.graphics.polygon("fill",player.body:getWorldPoints(player.shape:getPoints())) --_DEBUG
 	love.graphics.setColor(255, 255, 255)
 	player.model[player.pS].r = 0
 	player.model[player.pS].sx = player.direction
 	player.model[player.pS].sy = 1 
 	if player.direction ==-1 then
-		player.model[player.pS].ox = Pwidth
+		player.model[player.pS].ox = player.model[player.pS].frameWidth
 	else
 		player.model[player.pS].ox = 0
 	end
 
 	player.model[player.pS].oy = 0
 	player.model[player.pS]:draw(player.textures,
-									player.getX() - Pwidth/ 2 ,
-									player.getY() - player.textures[player.model[player.pS].texture_name]:getHeight() / 2 )
+									player.getX(),
+									player.getY())
 
 end
 
@@ -198,7 +198,7 @@ end
 
 function player.preSolve(curret, b, coll)
 		local x, y = coll:getNormal()
-		if y > 0 then
+		if y > 0 and coll:isEnabled() then
 			player.isjump = false
 		end
 	
