@@ -1,11 +1,11 @@
-﻿
-require "audio/playSounds"
+﻿require "audio/playSounds"
 
 GAME_GUN_SOUND = "audio/game/gun_sound.mp3"
 GAME_RUN_SOUND = "audio/game/run_sound.wav"
-GAME_JUMP_SOUND = "audio/game/jump_sound.mp3"
+GAME_JUMP_SOUND = "audio/game/jump_sound_1.mp3"
 
 player = { }
+
 
 function player.load()
 
@@ -43,13 +43,16 @@ function player.load()
 	--
 end
 
+
 function  player.getX()
 	return player.body:getX()
 end
 
+
 function player.getY()
 	return player.body:getY()
 end
+
 
 function player.jump()
 	if (not player.isjump) then
@@ -62,6 +65,7 @@ function player.jump()
 	--end
 	end
 end
+
 
 function player.moveLeft()
 	--player.runSound = playRunSound(GAME_RUN_SOUND, "static")
@@ -81,6 +85,7 @@ function player.moveLeft()
 	player.body:applyForce(-force, 0)
 end
 
+
 function player.moveRight()
 	-- player.runSound = playRunSound(GAME_RUN_SOUND, "static")
 	local Vx, Vy = player.body:getLinearVelocity()
@@ -99,6 +104,7 @@ function player.moveRight()
 	player.body:applyForce(force, 0)	
 end
 
+
 function  player.attack()
 	if player.attackspeed < (love.timer.getTime() - player.lastAttack) then
 		playRunSound(GAME_GUN_SOUND , "static")
@@ -110,6 +116,7 @@ function  player.attack()
 						player.textures.bullet, player.direction, player.damage,  SHOCK_INDEX)
 	end
 end
+
 
 function player.update(dt)
 
@@ -179,6 +186,7 @@ function player.draw()
 
 end
 
+
 function player.destroy()
 
 end
@@ -193,9 +201,6 @@ function player.beginContact(a, b, coll)
 end
  
  
-
- 
-
 function player.preSolve(curret, b, coll)
 		local x, y = coll:getNormal()
 		if y > 0 and coll:isEnabled() then
@@ -203,6 +208,7 @@ function player.preSolve(curret, b, coll)
 		end
 	
 end
+ 
  
 function player:takingDamage(dmg)
 	player.lastDamage = love.timer.getTime()

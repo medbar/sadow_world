@@ -17,7 +17,6 @@ require "menu"
 
 
 function love.load()
-	
 	options.load()  -- ченить придумать с хранением настроек 
 	love.window.setMode(options.resolution.w, options.resolution.h,options.graphics)
 
@@ -31,16 +30,18 @@ end
 -- end
 
 function love.keyreleased(key) 
-if IN_PROCESS.keyreleased then 
-		IN_PROCESS.keyreleased(key)
-	end
+  if IN_PROCESS.keyreleased then 
+    IN_PROCESS.keyreleased(key)
+  end
 end
 
+
 function love.mousepressed(x,y, botton) 
-if IN_PROCESS.mousepressed then 
+  if IN_PROCESS.mousepressed then 
 		IN_PROCESS.mousepressed(x, y, botton)
 	end
 end
+
 
 function love.mousereleased(x, y, botton)
 	if IN_PROCESS.mousereleased then 
@@ -49,28 +50,20 @@ function love.mousereleased(x, y, botton)
 end
 
 
-
-
 function love.resize( w, h )
 	options.resolution.w = w
 	options.resolution.h = h
 end
 
 
-
-
 function love.update(dt)
-	
 	IN_PROCESS.update(dt)
 
 	DEBUG_UPDATE() 
 end
 
 
-
 function love.draw()
-	
-
 	IN_PROCESS.draw()
 
 	DEBUG_DRAW()

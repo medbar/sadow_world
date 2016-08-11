@@ -77,8 +77,6 @@ function menu.update(dt)
 end
 
 
-
-
 function menu.keyreleased(key)
 	if key == "escape" and menu.elements.escape ~= nil then
 		if 	not menu.escRepeat then 
