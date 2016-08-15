@@ -3,8 +3,8 @@ return {
 		-- мышь
 			{	
 				mouseType = GENTLEMAN,				
-				x = 100,
-				y = -200,
+				x = 3400, 
+				y = 4000,
 				direction = 1,
 			},
 		

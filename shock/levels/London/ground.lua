@@ -5,6 +5,10 @@ SEA_LEVEL = 1450
 EARTH_SIZE = 36
 FIRST_HOUSE_X = 1900
 FIRST_HOUSE_Y = SEA_LEVEL - 418  
+
+BASEMENT = 4500
+
+
 local START_STAIRS = 4
 
 
@@ -24,8 +28,7 @@ local result = {
 							{688, 0},	
 							{688, EARTH_SIZE},
 							{0, EARTH_SIZE}
-							},
-						
+							},					
 			},	
 			
 	-- ДЛИННАЯ МОСТОВАЯ
@@ -37,8 +40,8 @@ local result = {
 				mode = "fan",
 				vertices = {
 							{0, 0}, 
-							{4000, 0},
-							{4000, EARTH_SIZE},
+							{10000, 0},
+							{10000, EARTH_SIZE},
 							{0, EARTH_SIZE}
 							},
 			},
@@ -50,7 +53,7 @@ local result = {
 
 
 
--- [.] -> [.] платформы в воздухе
+-- [.] -> [.] домишка
 			{
 				texture_name = "graphics/game/London/balcony.png",
 				x = FIRST_HOUSE_X + 135, 
@@ -143,15 +146,509 @@ local result = {
 				beginContact = PLATFORM_CONTACT,
 				preSolve = PLATFORM_PRE_SLOVE,
 				--endContact = PLATFORM_END_CONTACT,
-			}
+			},
 
 
-}
+
 ------------------------------------------------------------------
 
 
 	
 
+
+------------------ подвал------------------------------
+
+
+-- СТЕНКА-ДОМ
+			{
+
+				texture_name = "graphics/game/cobble.jpg",
+				x = BASEMENT,
+				y = SEA_LEVEL,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0},
+							{700, 0},	
+							{700, -600},
+							{0, -600}
+							},
+						
+	},	
+
+
+
+-- ЗЕМЛЯ ПОД ДОМОМ
+	{
+
+				texture_name = "graphics/game/cobble.jpg",
+				x = BASEMENT,
+				y = SEA_LEVEL + EARTH_SIZE,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0},
+							{600, 0},	
+							{600, 650},
+							{0, 650}
+							},
+						
+	},	
+
+
+-- ЛЕВО-ВЕРХ
+			{
+
+				texture_name = "graphics/game/cobble.jpg",
+				x =BASEMENT - 600,
+				y = SEA_LEVEL + EARTH_SIZE,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0},
+							{300, 0},	
+							{300, 500},
+							{0, 500}
+							},
+						
+	},	
+
+-- МОСТ
+			{
+				texture_name = "graphics/game/London/earth.png",
+				x =  BASEMENT - 400,
+				y = SEA_LEVEL + 900,
+				init = MESH_OBJECT, 
+				mode = "fan",
+				vertices = {
+							{0, 0}, 
+							{400, 0},
+							{400, EARTH_SIZE},
+							{0, EARTH_SIZE}
+							},
+	},
+
+	-- ЛЕВО-НИЗ
+			{
+
+				texture_name = "graphics/game/cobble.jpg",
+				x =BASEMENT - 600,
+				y = SEA_LEVEL + 900,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0},
+							{200, 0},	
+							{200, 300},
+							{0, 300}
+							},
+						
+	},	
+
+	-- БОЧКА В ТЮРМЕ
+			{
+				texture_name = "graphics/game/skyBlock.png",
+				x =BASEMENT - 700,
+				y = SEA_LEVEL + 1100,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0, 0,0},
+							{100, 0, 1,0},	
+							{100, 100, 1,1},
+							{0, 100, 0,1}
+							},
+	},
+	-- ЛЕВО-НИЗ-ОСНОВАНИЕ
+			{
+
+				texture_name = "graphics/game/cobble.jpg",
+				x =BASEMENT - 400,
+				y = SEA_LEVEL + 1200,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0},
+							{-1200, 0},	
+							{-1200, 300},
+							{0, 300}
+							},
+	},	
+
+	-- левая стенка в тюрме
+		{
+
+				texture_name = "graphics/game/cobble.jpg",
+				x =BASEMENT - 1600,
+				y = SEA_LEVEL +  EARTH_SIZE + 500,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0},
+							{-1000, 0},	
+							{-1000, 2700},
+							{0, 2700}
+							},
+	},	
+	-- right bot
+			{
+
+				texture_name = "graphics/game/cobble.jpg",
+				x =BASEMENT,
+				y = SEA_LEVEL + 900,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0},
+							{600, 0},	
+							{600, 1000},
+							{0, 1400}
+							},
+	},	
+
+-- bot platform
+			{
+
+				texture_name = "graphics/game/cobble.jpg",
+				x =BASEMENT,
+				y = SEA_LEVEL + 2000,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0},
+							{-1000, 0},	
+							{-1000, 300},
+							{0, 300}
+							},
+	},
+
+-- самы нижний блок 
+			{
+
+				texture_name = "graphics/game/grass.jpg",
+				x =BASEMENT - 1600,
+				y = SEA_LEVEL + 2800,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0 , 0,0},
+							{2400, 0 , 8,0},	
+							{2400, 300 , 8,1},
+							{0, 300 , 0,1}
+							},
+	},
+
+-- ГРОМАДНЫЙ РАЗДЕЛИТЕЛЬНЫЙ БЛОК 
+			{
+
+				texture_name = "graphics/game/cobble.jpg",
+				x =BASEMENT + 600,
+				y = SEA_LEVEL + EARTH_SIZE,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0},
+							{600, 0},	
+							{600, 1500},
+							{0, 1600}
+							},
+	},				
+
+-- БОЧКА на земле
+			{
+				texture_name = "graphics/game/skyBlock.png",
+				x =BASEMENT + 700,
+				y = SEA_LEVEL + 2600,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0, 0,0},
+							{200, 0, 1,0},	
+							{200, 200, 1,1},
+							{0, 200, 0,1}
+							},
+	},
+
+-- БОЧКА на БОЧКЕ
+			{
+				texture_name = "graphics/game/skyBlock.png",
+				x =BASEMENT + 800,
+				y = SEA_LEVEL + 2500,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0, 0,0},
+							{100, 0, 1,0},	
+							{100, 100, 1,1},
+							{0, 100, 0,1}
+							},
+	},
+
+-- нижняя земля перед препятствием
+			{
+
+				texture_name = "graphics/game/cobble.jpg",
+				x =BASEMENT + 900,
+				y = SEA_LEVEL + 2800,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0},
+							{800, 0},	
+							{800, -500},
+							{0, -500}
+							},
+	},	
+
+-- большая воздушная платформа 
+		{
+				texture_name = "graphics/game/London/balcony.png",
+				x =BASEMENT + 600,
+				y = SEA_LEVEL + 1850,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0, 0,0},
+							{600, 0 , 1,0},	
+							{600, 30 , 1,1},
+							{0, 30 , 0,1}
+							},
+				platformEnable = {},
+				beginContact = PLATFORM_CONTACT,
+				preSolve = PLATFORM_PRE_SLOVE,
+				--endContact = PLATFORM_END_CONTACT,
+			},
+
+-- 1 воздушная платформа 
+		{
+				texture_name = "graphics/game/London/balcony.png",
+				x =BASEMENT + 1400,
+				y = SEA_LEVEL + 1600,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0, 0,0},
+							{200, 0 , 1,0},	
+							{200, 30 , 1,1},
+							{0, 30 , 0,1}
+							},
+				platformEnable = {},
+				beginContact = PLATFORM_CONTACT,
+				preSolve = PLATFORM_PRE_SLOVE,
+				--endContact = PLATFORM_END_CONTACT,
+			},
+
+-- 2 воздушная платформа 
+		{
+				texture_name = "graphics/game/London/balcony.png",
+				x =BASEMENT + 1200,
+				y = SEA_LEVEL + 1350,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0, 0,0},
+							{150, 0 , 1,0},	
+							{150, 30 , 1,1},
+							{0, 30 , 0,1}
+							},
+				platformEnable = {},
+				beginContact = PLATFORM_CONTACT,
+				preSolve = PLATFORM_PRE_SLOVE,
+				--endContact = PLATFORM_END_CONTACT,
+			},
+
+-- 3 воздушная платформа 
+		{
+				texture_name = "graphics/game/London/balcony.png",
+				x =BASEMENT + 1400,
+				y = SEA_LEVEL + 1120,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0, 0,0},
+							{150, 0 , 1,0},	
+							{150, 30 , 1,1},
+							{0, 30 , 0,1}
+							},
+				platformEnable = {},
+				beginContact = PLATFORM_CONTACT,
+				preSolve = PLATFORM_PRE_SLOVE,
+				--endContact = PLATFORM_END_CONTACT,
+			},
+
+
+-- БОЧКА на земле
+			{
+				texture_name = "graphics/game/skyBlock.png",
+				x =BASEMENT + 1400,
+				y = SEA_LEVEL + 2100,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0, 0,0},
+							{200, 0, 1,0},	
+							{200, 200, 1,1},
+							{0, 200, 0,1}
+							},
+	},
+
+--стекло
+			{
+
+				texture_name = "graphics/game/London/glass.jpg",
+				x =BASEMENT + 1900,
+				y = SEA_LEVEL + 600,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0 , 0,0},
+							{50, 0 , 0,1},	
+							{50, 300 , 1,1},
+							{0, 300 , 0,1}
+							},
+
+				takingDamage = function(self)
+									self.body:destroy()
+									self.fixture:destroy()
+									self.draw = DRAW_VOID
+									return true
+				end, 
+	},	
+
+-- потолок в покере
+			{
+
+				texture_name = "graphics/game/cobble.jpg",
+				x =BASEMENT + 1600,
+				y = SEA_LEVEL + EARTH_SIZE,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0 , },
+							{2900, 0 , },	
+							{2900, 600 , },
+							{0, 600 , }
+							},
+	},	
+
+-------- ПОКЕРНАЯ СТЕНА
+			{
+
+				texture_name = "graphics/game/skyBlock.png",
+				x =BASEMENT + 1600,
+				y = SEA_LEVEL + 900,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0 , 0,0},
+							{400, 0 , 0,1},	
+							{400, 1400 , 1,1},
+							{0, 1400 , 0,1}
+							},
+	},	
+
+-- пол в покере	
+			{
+				texture_name = "graphics/game/London/pockerParket.jpg",
+				x =BASEMENT + 2000,
+				y = SEA_LEVEL + 1600,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0, },
+							{3000, 0 , },	
+							{3000, 200 , },
+							{0, 200 , }
+							},	
+	},
+
+-- барчик в покере 
+
+			{
+				texture_name = "graphics/game/London/shop.png",
+				x = BASEMENT + 1999 + 220, 
+				y = SEA_LEVEL + 1599 - 128,
+				width = 340,
+				height = 40,
+				hitbox_ox = 0,
+				hitbox_oy = -87,
+				init = IMAGE_OBJECT,
+				platformEnable = {},
+				beginContact = PLATFORM_CONTACT,
+				preSolve = PLATFORM_PRE_SLOVE,
+				--endContact = PLATFORM_END_CONTACT,
+	},
+
+
+
+
+
+ -- ДИВАНЧИК 
+ 			{
+				texture_name = "graphics/game/London/DIVAN.png",
+				x = BASEMENT + 1999 + 600, 
+				y = SEA_LEVEL + 1599 - 45,
+				width = 270,
+				height = 20,
+				hitbox_ox = 0,
+				hitbox_oy = 20,
+				init = IMAGE_OBJECT,
+				platformEnable = {},
+				beginContact = PLATFORM_CONTACT,
+				preSolve = PLATFORM_PRE_SLOVE,
+				--endContact = PLATFORM_END_CONTACT,
+	},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- крайне правая стенка в покере
+			{
+				texture_name = "graphics/game/cobble.jpg",
+				x =BASEMENT + 4700,
+				y = SEA_LEVEL + EARTH_SIZE,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0, },
+							{500, 0 , },	
+							{500, 1600 , },
+							{300, 1600 , },
+							{0,600 , }
+							},	
+	},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+-------------------------------------------------------
 
 
 

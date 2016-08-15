@@ -77,6 +77,8 @@ function options.generateNew()
 	options.controls = {
 						left = "a",
 						right = "d",
+						up = "w",
+						down = "s",
 						jump = "space",
 						attack = "k",
 						pause = "escape",

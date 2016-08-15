@@ -64,17 +64,17 @@ end
 function enemyManager.draw()
 	for i,obj in ipairs(enemyManager.enemies) do 
 		--local Pwidth = (obj.textures[obj.model[1].texture_name]:getWidth()/obj.model[1].number_of_frames)
-		obj.model[1].r = 0
-		obj.model[1].sx = obj.direction
-		obj.model[1].sy = 1 
+		obj.model[3].r = 0
+		obj.model[3].sx = obj.direction
+		obj.model[3].sy = 1 
 		if obj.direction ==-1 then
-		obj.model[1].ox = obj.model[1].frameWidth
+		obj.model[3].ox = obj.model[3].frameWidth
 		else
-		obj.model[1].ox = 0
+		obj.model[3].ox = 0
 		end
-		obj.model[1].oy = 0
+		obj.model[3].oy = 0
 		--love.graphics.polygon("fill",obj.phys.body:getWorldPoints(obj.phys.shape:getPoints())) --_DEBUG
-		obj.model[1]:draw(obj.textures, obj.phys.body:getX(),
+		obj.model[3]:draw(obj.textures, obj.phys.body:getX(),
 										obj.phys.body:getY())
 
 	end

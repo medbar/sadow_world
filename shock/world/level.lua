@@ -39,27 +39,7 @@ function level.loadGround(level_directory)
 	level.ground =  require(level.directory.."/ground")
 	INIT_COLLECTION(level,"ground")
 	for i,b in ipairs(level.ground) do 
-		b.body = love.physics.newBody(game.world, b.x, b.y, "static")
-
-		
-		if b.init == MESH_OBJECT then
-			
-			local v ={}
-			for j, point in ipairs(b.vertices) do
-				table.insert(v, point[1])
-				table.insert(v, point[2])	
-			end
-			b.shape = love.physics.newPolygonShape(v)
-		else 
-			b.shape = love.physics.newRectangleShape(b.hitbox_ox,b.hitbox_oy,b.width, b.height) 
-		end
-
-		
-		b.fixture = love.physics.newFixture(b.body, b.shape)
-		b.fixture:setUserData(b)
-
-		b.fixture:setFriction(0.9)
-		b.fixture:setGroupIndex(GROUND_INDEX)
+		INIT_PHYSICS(b, "static", GROUND_INDEX)
 	end
 end
 
@@ -72,12 +52,7 @@ function level.loadActiveObj(level_directory)
 	level.activeObjects = require(level.directory.."/active_objects")
 	INIT_COLLECTION(level, "activeObjects")
 	for i,obj in ipairs(level.activeObjects) do
-		obj.body = love.physics.newBody(game.world,obj.x,obj.y,obj.object_type)
-		obj.shape = love.physics.newRectangleShape(obj.width, obj.height)
-		obj.fixture = love.physics.newFixture(obj.body, obj.shape)
-		obj.fixture:setSensor(true)
-		obj.fixture:setUserData(obj)
-
+		INIT_PHYSICS(obj, obj.object_type, 0, true )
 	end
 end
 function level.loadDialogs()
@@ -109,8 +84,8 @@ end
 
 function level.DRAW_BG()
 	love.graphics.draw(level.bg.texture, 
-						player.getX()/3-options.resolution.w/2,
-						player.getY()/6-options.resolution.h/2,
+						player.getX()/5-options.resolution.w/2,
+						player.getY()/10-options.resolution.h/2,
 						0,
 						level.bg.width / level.bg.texture:getWidth(),
 						level.bg.height / level.bg.texture:getHeight()

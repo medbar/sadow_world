@@ -19,6 +19,40 @@ function INIT_COLLECTION(self, collName)
 
 end
 
+
+function INIT_PHYSICS(b, obj_type, groupIndex, isSensor)
+	b.body = love.physics.newBody(game.world, b.x, b.y, obj_type)
+
+		
+		if b.init == MESH_OBJECT then
+			
+			local v ={}
+			for j, point in ipairs(b.vertices) do
+				if b.physScaleX ~= nil then 
+
+					table.insert(v, point[1] * b.physScaleX)
+					table.insert(v, point[2] * b.physScaleY)
+				else
+					table.insert(v, point[1])
+					table.insert(v, point[2])
+				end	
+			end
+			b.shape = love.physics.newPolygonShape(v)
+		elseif b.init == IMAGE_OBJECT then
+			b.shape = love.physics.newRectangleShape(b.hitbox_ox,b.hitbox_oy,b.width, b.height) 
+		else 
+			return
+		end
+
+		
+		b.fixture = love.physics.newFixture(b.body, b.shape)
+		b.fixture:setUserData(b)
+
+		b.fixture:setSensor(isSensor)
+		b.fixture:setFriction(0.9)
+		b.fixture:setGroupIndex(groupIndex)
+
+end
 -- init - определяет способ загрузки и способ отрисовки объекта
 -- init может быть:
 -- 				VOID - объекта нет
@@ -67,6 +101,8 @@ function MESH_OBJECT(self,textures)
 		for i,v in ipairs(self.vertices)do
 			if v[3] == nil then
 				v[3] = v[1]/w
+			end
+			if v[4] == nil then
 				v[4] = v[2]/h
 			end
 		end

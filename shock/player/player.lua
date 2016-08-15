@@ -32,7 +32,7 @@ function player.load()
 	player.hitBoxWidth =  100
 	player.hitBoxHeight = 170
 	player.maxV = 500
-	player.body = love.physics.newBody(game.world, 200, 200, "dynamic") -- started coordinate
+	player.body = love.physics.newBody(game.world, 200,200, "dynamic") -- started coordinate
 	player.body:setSleepingAllowed( false )
 	player.shape = love.physics.newRectangleShape(player.hitBoxWidth,player.hitBoxHeight)
 	player.fixture = love.physics.newFixture(player.body, player.shape, 0)
@@ -104,6 +104,35 @@ function player.moveRight()
 	player.body:applyForce(force, 0)	
 end
 
+function player.moveUp()
+	--player.runSound = playRunSound(GAME_RUN_SOUND, "static")
+	DEBUG_STATIC = player.onStairs
+	if player.onStairs == nil then 
+		return
+	end
+	if not player.onStairs  then
+		player.onStairs = true 
+		player.fixture:setSensor(true)
+		player.body:setGravityScale(0)
+		player.body:setLinearVelocity(0,0)
+	end
+	player.body:setLinearVelocity(0, -200)
+end
+
+function player.moveDown()
+	--player.runSound = playRunSound(GAME_RUN_SOUND, "static")
+	DEBUG_STATIC = player.onStairs
+	if player.onStairs == nil then 
+		return
+	end
+	if  not player.onStairs then 
+		player.onStairs = true 
+		player.fixture:setSensor(true)
+		player.body:setLinearVelocity(0,0)
+		player.body:setGravityScale(0)
+	end
+	player.body:setLinearVelocity(0, 200)
+end
 
 function  player.attack()
 	if player.attackspeed < (love.timer.getTime() - player.lastAttack) then
@@ -121,46 +150,53 @@ end
 function player.update(dt)
 
 	
-	
-	 player.pS = 1
 	if 	(love.timer.getTime() - player.lastDamage) < (player.model[4].number_of_frames * player.model[4].frame_dt) then 
 		player.pS = 5
+	elseif player.onStairs then
+		player.pS = 2 -- [6] 
+		local x,y = player.body:getLinearVelocity()
+		player.body:setLinearVelocity(x/1.1,0)
+	
+		
 	elseif player.isjump then
 		player.pS = 3
 	elseif math.abs(player.body:getLinearVelocity()) <10 then
 		player.pS = 1
 	else	
-		player.pS = 2
+		player.pS = 2 -- бег
 	end 
 
 
-	if player.pS ~= 5 then
-		if love.keyboard.isDown(options.controls.left) then
-			player.moveLeft()
-   			
-		end
-		if love.keyboard.isDown(options.controls.right) then
-			player.moveRight()
-   	 		
-		end
-		if love.keyboard.isDown(options.controls.jump) then
-			player.jump()
-  		 	 --if player.runSound ~= nil then
-		   	   --player.runSound:stop()
-		   	 --end
- 	  		
-		end
-
-		if  love.keyboard.isDown(options.controls.attack) then
-			player.attack()
-  	  	
-		end
 
 
-		if love.keyboard.isDown(options.controls.pause) then
-			PAUSE()
-		end
+
+	if love.keyboard.isDown(options.controls.up) then
+		player.moveUp()   			
 	end
+	if love.keyboard.isDown(options.controls.down) then
+		player.moveDown()	
+	end
+	if love.keyboard.isDown(options.controls.left) then
+		player.moveLeft()   			
+	end
+	if love.keyboard.isDown(options.controls.right) then
+		player.moveRight()
+   	 		
+	end
+	if love.keyboard.isDown(options.controls.jump) then
+		player.jump()
+	end
+
+	if  love.keyboard.isDown(options.controls.attack) then
+		player.attack()
+	end
+
+
+	if love.keyboard.isDown(options.controls.pause) then
+		PAUSE()
+	end
+	
+ 
 end
 
 

@@ -14,7 +14,7 @@ end
 function CATCH_UP_PLAYER_TARGET(self)
 	local dx = math.abs(ENEMY_GET_X(self) - player.getX())
 	local dy = math.abs(ENEMY_GET_Y(self) - player.getY())
-		DEBUG_STATIC = dx.." "..dy.."\n"..ENEMY_GET_X(self).." "..ENEMY_GET_Y(self).."\n"
+		
 	return self.characteristics.bloodLust/dx , CATCH_UP_PLAYER
 
 end   

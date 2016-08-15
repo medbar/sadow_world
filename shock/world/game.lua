@@ -111,6 +111,18 @@ function game.DRAW_BULLETS()
 
 end
 
+function game.DRAW_HP(xs,ys, scale)
+	local v = { 
+			{(xs	   ) * options.resolution.x, (ys 	 ) * options.resolution.y},
+			{(xs + 0.3 ) * options.resolution.x, (ys 	 ) * options.resolution.y},
+			{(xs + 0.25) * options.resolution.x, (ys + 15) * options.resolution.y},
+			{(xs + 0.05) * options.resolution.x, (ys + 15) * options.resolution.y}
+	}
+
+	love.graphics.setColor(0, 0, 0)
+	love.love.graphics.polygon("line",v)
+end
+
 function game.destroy()
 	game.world:destroy()
 	

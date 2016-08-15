@@ -4,8 +4,8 @@
 
 return {
 		texture_name = "graphics/game/London/bg.jpg",		
-		width = 10000,
-		height =  2500
+		width = 20000,
+		height =  10000
 		-- другие характеристики фона( если они есть, а то я не придумал больше ничего)
 }
 

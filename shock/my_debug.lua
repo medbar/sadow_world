@@ -4,8 +4,8 @@ DEBUG_STATIC = ""
 function DEBUG_UPDATE()
 	DEBUG_INFO = "debug info:\n"
 	if IN_PROCESS == game then
+		
 		DEBUG_INFO = DEBUG_INFO..love.mouse:getX() .. ", "..love.mouse:getY() .. "\n"
-		DEBUG_INFO = DEBUG_INFO .. level.ground[2].body:getX() 
 		DEBUG_INFO = DEBUG_INFO..player.body:getX() .. ", "..player.body:getY() .. "\n"
 		DEBUG_INFO = DEBUG_INFO ..[[		HEALTH: ]]..player.hp.."\n"
 		
