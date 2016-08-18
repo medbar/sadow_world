@@ -241,6 +241,33 @@ function DRAW_ANIMATED_OBJ(self, textures,x,y)
 	self.r, self.sx,self.sy,self.ox,self.oy)
 end
 
+function SINGLE_ANIMATION(self, textures)
+
+	self.frameId = self.number_of_frames
+	self.timer = - self.frame_dt
+
+
+	self.quads = { }
+	local imgW, imgH = textures[self.texture_name]:getDimensions()
+	self.frameWidth = imgW / self.number_of_frames
+	for x = 0, imgW, self.frameWidth do
+		table.insert(self.quads, love.graphics.newQuad(x, 0, self.frameWidth, imgH, imgW, imgH))
+	end
+
+
+	if self.x == nill then 
+		self.draw =  DRAW_ANIMATED_OBJ
+		return 
+	end
+
+	if self.x < 1 and self.x > 0 then
+		self.draw = SCALE_DRAW_ANIMATED_OBJ
+	else
+		self.draw = DRAW_ANIMATED_OBJ
+	end
+end
+
+
 
 function FROM_ATLAS(self, textures)
 	self.quad = love.graphics.newQuad(self.xInPic, self.yInPic,

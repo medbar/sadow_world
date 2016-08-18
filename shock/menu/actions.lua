@@ -48,7 +48,7 @@ function GO_TO_SOUNDS(self)
 end
 
 function GO_TO_CONTROLS(self)
-	menu.load("controls_options")
+	menu.load("Controls_options")
 end
 
 function GO_BACK(self)

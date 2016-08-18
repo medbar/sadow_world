@@ -1,4 +1,4 @@
-﻿require "audio/playSounds"
+require "audio/playSounds"
 
 GAME_GUN_SOUND = "audio/game/gun_sound.mp3"
 GAME_RUN_SOUND = "audio/game/run_sound.wav"
@@ -31,10 +31,13 @@ function player.load()
 
 	player.hitBoxWidth =  100
 	player.hitBoxHeight = 170
-	player.maxV = 500
-	player.body = love.physics.newBody(game.world, 200,200, "dynamic") -- started coordinate
+	player.maxV = 600
+	player.reactiveForce = 800
+
+	player.body = love.physics.newBody(game.world, 7000,2500, "dynamic") -- started coordinate
 	player.body:setSleepingAllowed( false )
-	player.shape = love.physics.newRectangleShape(player.hitBoxWidth,player.hitBoxHeight)
+	player.body:setMass(0)
+	player.shape = love.physics.newRectangleShape(player.hitBoxWidth, player.hitBoxHeight)
 	player.fixture = love.physics.newFixture(player.body, player.shape, 0)
 	player.fixture:setUserData(player)
 
@@ -71,18 +74,16 @@ function player.moveLeft()
 	--player.runSound = playRunSound(GAME_RUN_SOUND, "static")
 	local Vx, Vy = player.body:getLinearVelocity()
 	player.direction = -1
-	if  -Vx > player.maxV then 
-		return 
-	end
-
-	local force = 2000
 	if player.isjump then 
-		if Vy > player.maxV then
+		if -Vx > player.maxV then
 			return
 		end
-		force = force/3
+		player.body:applyForce(player.direction * player.reactiveForce, 0)
+		return
 	end
-	player.body:applyForce(-force, 0)
+	
+	
+	player.body:setLinearVelocity(player.maxV * player.direction, Vy)
 end
 
 
@@ -90,18 +91,15 @@ function player.moveRight()
 	-- player.runSound = playRunSound(GAME_RUN_SOUND, "static")
 	local Vx, Vy = player.body:getLinearVelocity()
 	player.direction = 1
-	if  Vx > player.maxV then 
-		return 
-	end
-
-	local force = 2000
 	if player.isjump then 
-		if Vy > player.maxV then
+		if Vx > player.maxV then
 			return
 		end
-		force = force/3
+		player.body:applyForce(player.direction * player.reactiveForce, 0)
+		return
 	end
-	player.body:applyForce(force, 0)	
+	
+	player.body:setLinearVelocity(player.direction * player.maxV, Vy)
 end
 
 function player.moveUp()

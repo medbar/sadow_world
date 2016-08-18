@@ -1,5 +1,4 @@
-
-function GENTLEMAN() return {
+function UMBRELLA() return {
 	model = {
 			-- [1] - состояние покоя
 			-- [2] - бег(в лево)
@@ -40,8 +39,7 @@ function GENTLEMAN() return {
 	characteristics = {
 		stepForce = 700,
 		hp = 100,
-		
-		reactionTime = 1, --sec	
+			
 		bloodLust = 600,
 		width = 110,
 		height = 180,

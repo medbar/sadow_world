@@ -32,10 +32,7 @@ function enemyManager.newEnemy(args)
 	enemy.phys.body:setSleepingAllowed(false)
 	enemy.textures = {}
 	INIT_COLLECTION(enemy,"model")
-	--enemy.model[2].texture_name = "graphics/sample_texture.bmp"
-	--enemy.textures["graphics/sample_texture.bmp"] = love.graphics.newImage(enemy.model[2].texture_name)
-	--enemy.model[2]:init(enemy.textures)		
-	--		
+	
 
 	table.insert(enemyManager.enemies, enemy)
 	enemy.ID = #enemyManager.enemies

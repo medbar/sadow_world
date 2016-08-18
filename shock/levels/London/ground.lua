@@ -525,8 +525,8 @@ local result = {
 				mode = "fan", 
 				vertices = {
 							{0, 0 , },
-							{2900, 0 , },	
-							{2900, 600 , },
+							{2880, 0 , },	
+							{2880, 600 , },
 							{0, 600 , }
 							},
 	},	
@@ -547,31 +547,17 @@ local result = {
 							},
 	},	
 
--- пол в покере	
-			{
-				texture_name = "graphics/game/London/pockerParket.jpg",
-				x =BASEMENT + 2000,
-				y = SEA_LEVEL + 1600,
-				init = MESH_OBJECT, 
-				mode = "fan", 
-				vertices = {
-							{0, 0, },
-							{3000, 0 , },	
-							{3000, 200 , },
-							{0, 200 , }
-							},	
-	},
 
 -- барчик в покере 
 
 			{
-				texture_name = "graphics/game/London/shop.png",
+				texture_name = "graphics/game/London/bar.png",
 				x = BASEMENT + 1999 + 220, 
-				y = SEA_LEVEL + 1599 - 128,
-				width = 340,
-				height = 40,
+				y = SEA_LEVEL + 1600 - 129,
+				width = 350,
+				height = 5,
 				hitbox_ox = 0,
-				hitbox_oy = -87,
+				hitbox_oy = -105,
 				init = IMAGE_OBJECT,
 				platformEnable = {},
 				beginContact = PLATFORM_CONTACT,
@@ -607,6 +593,20 @@ local result = {
 
 
 
+-- пол в покере	
+			{
+				texture_name = "graphics/game/London/pockerParket.jpg",
+				x =BASEMENT + 2000,
+				y = SEA_LEVEL + 1600,
+				init = MESH_OBJECT, 
+				mode = "fan", 
+				vertices = {
+							{0, 0, },
+							{3000, 0 , },	
+							{3000, 200 , },
+							{0, 200 , }
+							},	
+	},
 
 
 
@@ -615,7 +615,7 @@ local result = {
 -- крайне правая стенка в покере
 			{
 				texture_name = "graphics/game/cobble.jpg",
-				x =BASEMENT + 4700,
+				x =BASEMENT + 4720,
 				y = SEA_LEVEL + EARTH_SIZE,
 				init = MESH_OBJECT, 
 				mode = "fan", 
