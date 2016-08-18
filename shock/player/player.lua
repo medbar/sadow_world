@@ -11,7 +11,7 @@ function player.load()
 
 	--игровые характеристики
 	player.hp = 100
-	player.attackspeed = 0.8 -- в секундах
+	player.attackspeed = 0.2 -- в секундах
 	player.bulletSpeed = 1200
 	player.damage = 10
 
@@ -32,11 +32,11 @@ function player.load()
 	player.hitBoxWidth =  100
 	player.hitBoxHeight = 170
 	player.maxV = 600
-	player.reactiveForce = 800
+	player.reactiveForce = 5000
 
 	player.body = love.physics.newBody(game.world, 7000,2500, "dynamic") -- started coordinate
 	player.body:setSleepingAllowed( false )
-	player.body:setMass(0)
+	--player.body:setMass(0)
 	player.shape = love.physics.newRectangleShape(player.hitBoxWidth, player.hitBoxHeight)
 	player.fixture = love.physics.newFixture(player.body, player.shape, 0)
 	player.fixture:setUserData(player)
@@ -72,34 +72,28 @@ end
 
 function player.moveLeft()
 	--player.runSound = playRunSound(GAME_RUN_SOUND, "static")
-	local Vx, Vy = player.body:getLinearVelocity()
 	player.direction = -1
-	if player.isjump then 
-		if -Vx > player.maxV then
+	player.step()	
+end
+
+function player.step()
+	local Vx, Vy = player.body:getLinearVelocity()
+	if player.direction*Vx > player.maxV then
 			return
 		end
-		player.body:applyForce(player.direction * player.reactiveForce, 0)
+	if player.isjump then 		
+		player.body:applyForce(player.direction * player.reactiveForce/5, 0)
 		return
 	end
 	
-	
-	player.body:setLinearVelocity(player.maxV * player.direction, Vy)
+	player.body:applyForce(player.direction * player.reactiveForce, 0)
 end
-
 
 function player.moveRight()
 	-- player.runSound = playRunSound(GAME_RUN_SOUND, "static")
-	local Vx, Vy = player.body:getLinearVelocity()
+	--local Vx, Vy = player.body:getLinearVelocity()
 	player.direction = 1
-	if player.isjump then 
-		if Vx > player.maxV then
-			return
-		end
-		player.body:applyForce(player.direction * player.reactiveForce, 0)
-		return
-	end
-	
-	player.body:setLinearVelocity(player.direction * player.maxV, Vy)
+	player.step()
 end
 
 function player.moveUp()
@@ -133,22 +127,28 @@ function player.moveDown()
 end
 
 function  player.attack()
-	if player.attackspeed < (love.timer.getTime() - player.lastAttack) then
+	if  player.pS < 4 then
 		playRunSound(GAME_GUN_SOUND , "static")
 
-		player.lastAttack = love.timer.getTime()
-		game.newBullet(player.getX(), -- + player.hitBoxWidth/2*player.direction,
-						 player.getY()+32,
+		
+		game.newBullet(player.getX() + player.hitBoxWidth/2 * (player.model[4].frameId-1), -- + player.hitBoxWidth/2*player.direction,
+						 player.getY()+32 - 5 * (player.model[4].frameId-1),
 						player.bulletSpeed, 0,
 						player.textures.bullet, player.direction, player.damage,  SHOCK_INDEX)
+
+		player.lastAttack = love.timer.getTime()
+		player.pS = 4
+		player.model[player.pS].frame_dt = player.attackspeed
 	end
 end
 
 
 function player.update(dt)
 
-	
-	if 	(love.timer.getTime() - player.lastDamage) < (player.model[4].number_of_frames * player.model[4].frame_dt) then 
+	local time = love.timer.getTime()
+	if (time - player.lastAttack) < player.attackspeed  then 
+		player.pS = 4
+	elseif ( time - player.lastDamage) < (player.model[4].number_of_frames * player.model[4].frame_dt) then
 		player.pS = 5
 	elseif player.onStairs then
 		player.pS = 2 -- [6] 
@@ -166,7 +166,16 @@ function player.update(dt)
 
 
 
+	if  love.keyboard.isDown(options.controls.attack) then
+		player.attack()
+	end
 
+
+	if love.keyboard.isDown(options.controls.pause) then
+		PAUSE()
+	end
+
+	if player.pS ~=4 then
 
 	if love.keyboard.isDown(options.controls.up) then
 		player.moveUp()   			
@@ -185,14 +194,9 @@ function player.update(dt)
 		player.jump()
 	end
 
-	if  love.keyboard.isDown(options.controls.attack) then
-		player.attack()
 	end
 
-
-	if love.keyboard.isDown(options.controls.pause) then
-		PAUSE()
-	end
+	
 	
  
 end
@@ -200,23 +204,12 @@ end
 
 function player.draw()
 
-	
+	if	player.model:draw(player.textures, player.pS, player.getX(), player.getY()) then 
+		player.pS = 1
+	end
 	
 	--love.graphics.polygon("fill",player.body:getWorldPoints(player.shape:getPoints())) --_DEBUG
-	love.graphics.setColor(255, 255, 255)
-	player.model[player.pS].r = 0
-	player.model[player.pS].sx = player.direction
-	player.model[player.pS].sy = 1 
-	if player.direction ==-1 then
-		player.model[player.pS].ox = player.model[player.pS].frameWidth
-	else
-		player.model[player.pS].ox = 0
-	end
-
-	player.model[player.pS].oy = 0
-	player.model[player.pS]:draw(player.textures,
-									player.getX(),
-									player.getY())
+	
 
 end
 

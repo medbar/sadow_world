@@ -2,6 +2,7 @@
 return {
 			bullet =  "graphics/game/main/bullet.png",
 
+			draw = DRAW_CLEVER_MODEL,
 			-- [1] - состояние покоя
 			-- [2] - бег(в лево)
 			-- [3] - прыжок 
@@ -39,10 +40,10 @@ return {
 			--4
 			{
 				
-				texture_name = "graphics/game/main/shock_stay.png",
-				init = IMAGE_OBJECT,
-				number_of_frames = 1,
-				frame_dt = 0.4,
+				texture_name = "graphics/game/main/shock_attack.png",
+				init = ANIMATED_OBJECT,
+				number_of_frames = 2,
+				frame_dt = 0.2,
 			},
 			--5
 			{

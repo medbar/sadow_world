@@ -243,7 +243,7 @@ end
 
 function SINGLE_ANIMATION(self, textures)
 
-	self.frameId = self.number_of_frames
+	self.frameId = 0
 	self.timer = - self.frame_dt
 
 
@@ -255,19 +255,33 @@ function SINGLE_ANIMATION(self, textures)
 	end
 
 
-	if self.x == nill then 
-		self.draw =  DRAW_ANIMATED_OBJ
-		return 
-	end
+	
+	self.draw = DRAW_SINGLE_ANIMATION
 
-	if self.x < 1 and self.x > 0 then
-		self.draw = SCALE_DRAW_ANIMATED_OBJ
-	else
-		self.draw = DRAW_ANIMATED_OBJ
-	end
 end
 
+function DRAW_SINGLE_ANIMATION(self,textures,x,y)
+	if x == nil then 
+		x = self.x
+		y = self.y
+	end
 
+	local time = love.timer.getTime()
+	if time - self.timer > self.frame_dt then
+		self.timer = time
+		self.frameId = self.frameId + 1
+		if self.frameId > self.number_of_frames then
+			self.frameId = 1
+			return true -- анимация закончилась
+		end
+	end
+
+	love.graphics.draw(textures[self.texture_name],
+	self.quads[self.frameId],
+	x - self.frameWidth / 2,
+	y - textures[self.texture_name]:getHeight() / 2,
+	self.r, self.sx,self.sy,self.ox,self.oy)
+end
 
 function FROM_ATLAS(self, textures)
 	self.quad = love.graphics.newQuad(self.xInPic, self.yInPic,
@@ -298,4 +312,34 @@ function DRAW_FROM_ATLAS(self, textures)
 	self.quad,
 	self.x,
 	self.y)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+function DRAW_CLEVER_MODEL(self, textures, id, x,y)
+	love.graphics.setColor(255, 255, 255)
+	self[id].r = 0
+	self[id].sx = player.direction
+	self[id].sy = 1 
+	if player.direction ==-1 then
+		self[id].ox = self[id].frameWidth
+	else
+		self[id].ox = 0
+	end
+
+	self[id].oy = 0
+	if self[id]:draw(textures,x,y) then
+		player.pS = 1
+		self[id]:draw(textures,x,y)
+	end
 end
