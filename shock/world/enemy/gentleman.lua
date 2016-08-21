@@ -1,11 +1,12 @@
 
 function GENTLEMAN() return {
 	model = {
+			draw = DRAW_CLEVER_MODEL,
 			-- [1] - состояние покоя
 			-- [2] - бег(в лево)
-			-- [3] - прыжок 
-			-- [4] - атака(обычная)
-			-- [5] - получение урона
+			
+			-- [3] - атака(обычная)
+			-- [4] - защита сверху
 			-- [5 + №атаки] - атаки необычные
 			
 			--1
@@ -35,13 +36,21 @@ function GENTLEMAN() return {
 				frame_dt  = 0.12,
 				--
 			},
+			--4
+			{
+				texture_name = "graphics/game/enemies/gentleman_protected.png",
+				init = IMAGE_OBJECT,
+				number_of_frames = 1,
+				frame_dt = 0.4,
+			},
+
 
 	},
 	characteristics = {
 		stepForce = 700,
 		hp = 100,
 		
-		reactionTime = 1, --sec	
+		reactionTime = 0.2, --sec	
 		bloodLust = 600,
 		width = 110,
 		height = 180,
@@ -49,10 +58,11 @@ function GENTLEMAN() return {
 	},
 
 	tergets = { 
+		CATCH_UP_PLAYER_TARGET,
+		MELEE_ATTACK_TARGET,
 		AVOID_DEATH_TARGET, 
 
-		CATCH_UP_PLAYER_TARGET,
-		STOP_TARGET,
+		--STOP_TARGET,
 		
 	},
 	
@@ -64,7 +74,22 @@ function GENTLEMAN() return {
 	takingDamage = ENEMY_TAKING_DAMAGE,
 	die = ENEMY_DIE,
 
-	preSolve = JUMP_ON_THE_UMBRELLA
+	preSolve = THE_UMBRELLA,
+	endContact = function(a,b,col)
+					a:getUserData().wantAttack = nil
+	end,
+
+	attack = function(self)
+		if self.wantAttack then
+			if self.wantAttack == player then
+				self.pS = 3
+				--local vx, vy = self.phys.body:getLinearVelocity()
+				player.body:setLinearVelocity(600*self.direction,-1000)
+				player:takingDamage(10)
+
+			end
+		end	
+	end,
 }
 
 end
