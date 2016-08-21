@@ -11,7 +11,7 @@ function player.load()
 
 	--игровые характеристики
 	player.hp = 100
-	player.attackspeed = 0.2 -- в секундах
+	player.attackspeed = 0.4 -- в секундах
 	player.bulletSpeed = 1200
 	player.damage = 10
 
@@ -34,7 +34,7 @@ function player.load()
 	player.maxV = 600
 	player.reactiveForce = 5000
 
-	player.body = love.physics.newBody(game.world, 7000,2500, "dynamic") -- started coordinate
+	player.body = love.physics.newBody(game.world, 8000,1000, "dynamic") -- started coordinate  7000,2500
 	player.body:setSleepingAllowed( false )
 	--player.body:setMass(0)
 	player.shape = love.physics.newRectangleShape(player.hitBoxWidth, player.hitBoxHeight)
@@ -70,11 +70,7 @@ function player.jump()
 end
 
 
-function player.moveLeft()
-	--player.runSound = playRunSound(GAME_RUN_SOUND, "static")
-	player.direction = -1
-	player.step()	
-end
+
 
 function player.step()
 	local Vx, Vy = player.body:getLinearVelocity()
@@ -89,12 +85,7 @@ function player.step()
 	player.body:applyForce(player.direction * player.reactiveForce, 0)
 end
 
-function player.moveRight()
-	-- player.runSound = playRunSound(GAME_RUN_SOUND, "static")
-	--local Vx, Vy = player.body:getLinearVelocity()
-	player.direction = 1
-	player.step()
-end
+
 
 function player.moveUp()
 	--player.runSound = playRunSound(GAME_RUN_SOUND, "static")
@@ -142,28 +133,33 @@ function  player.attack()
 	end
 end
 
-
-function player.update(dt)
-
+function player.changeState()
 	local time = love.timer.getTime()
 	if (time - player.lastAttack) < player.attackspeed  then 
-		player.pS = 4
+		player.pS = 4 -----обыйная атака
+
 	elseif ( time - player.lastDamage) < (player.model[4].number_of_frames * player.model[4].frame_dt) then
-		player.pS = 5
+		player.pS = 5  --- получение урона
+
 	elseif player.onStairs then
-		player.pS = 2 -- [6] 
+		player.pS = 2 -- на леснице 
 		local x,y = player.body:getLinearVelocity()
 		player.body:setLinearVelocity(x/1.1,0)
-	
-		
+
 	elseif player.isjump then
 		player.pS = 3
+
 	elseif math.abs(player.body:getLinearVelocity()) <10 then
-		player.pS = 1
+		player.pS = 1 -- покой
 	else	
 		player.pS = 2 -- бег
 	end 
 
+end
+
+function player.update(dt)
+
+	player.changeState()
 
 
 	if  love.keyboard.isDown(options.controls.attack) then
@@ -175,42 +171,45 @@ function player.update(dt)
 		PAUSE()
 	end
 
-	if player.pS ~=4 then
-
-	if love.keyboard.isDown(options.controls.up) then
-		player.moveUp()   			
-	end
-	if love.keyboard.isDown(options.controls.down) then
-		player.moveDown()	
-	end
 	if love.keyboard.isDown(options.controls.left) then
-		player.moveLeft()   			
+		player.direction = -1
+		--- при атаке нельзя бежать
+		if player.pS ~=4 then
+			player.step()  			
+		end	
 	end
 	if love.keyboard.isDown(options.controls.right) then
-		player.moveRight()
-   	 		
-	end
-	if love.keyboard.isDown(options.controls.jump) then
-		player.jump()
-	end
-
+		player.direction = 1
+		--- при атаке нельзя бежать
+		if player.pS ~=4 then
+			player.step()
+		end		
 	end
 
+
 	
-	
- 
+		if love.keyboard.isDown(options.controls.up) then
+			player.moveUp()   			
+		end
+		if love.keyboard.isDown(options.controls.down) then
+			player.moveDown()	
+		end
+		
+		if love.keyboard.isDown(options.controls.jump) then
+			player.jump()
+		end
+
+
+
+
+
 end
 
 
 function player.draw()
 
-	if	player.model:draw(player.textures, player.pS, player.getX(), player.getY()) then 
-		player.pS = 1
-	end
-	
+	player.model:draw(player.textures, player.pS, player.direction, player.getX(), player.getY())	
 	--love.graphics.polygon("fill",player.body:getWorldPoints(player.shape:getPoints())) --_DEBUG
-	
-
 end
 
 

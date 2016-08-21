@@ -120,10 +120,13 @@ end
 
 function IMAGE_OBJECT(self, textures)
 	self.frameWidth = textures[self.texture_name]:getWidth()
-	if self.x == nill then 
+	if self.x == nil then 
 		self.draw =  DRAW_IMAGE_OBJECT
 		return 
 	end
+
+	
+
 	if self.x < 1 and self.x > 0 then
 		self.draw = SCALE_DRAW_IMAGE_OBJECT
 	else
@@ -180,7 +183,7 @@ function ANIMATED_OBJECT(self, textures)
 	end
 
 
-	if self.x == nill then 
+	if self.x == nil then 
 		self.draw =  DRAW_ANIMATED_OBJ
 		return 
 	end
@@ -326,20 +329,17 @@ end
 
 
 
-function DRAW_CLEVER_MODEL(self, textures, id, x,y)
+function DRAW_CLEVER_MODEL(self, textures, id, direction, x,y)
 	love.graphics.setColor(255, 255, 255)
 	self[id].r = 0
-	self[id].sx = player.direction
+	self[id].sx = direction
 	self[id].sy = 1 
-	if player.direction ==-1 then
+	if direction ==-1 then
 		self[id].ox = self[id].frameWidth
 	else
 		self[id].ox = 0
 	end
 
 	self[id].oy = 0
-	if self[id]:draw(textures,x,y) then
-		player.pS = 1
-		self[id]:draw(textures,x,y)
-	end
+	self[id]:draw(textures,x,y)
 end

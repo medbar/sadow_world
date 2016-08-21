@@ -49,11 +49,14 @@ return {
 			{
 				
 				texture_name = "graphics/game/main/shock_damage.png",
-				init = function()end,
-				draw = function(self, textures)
+				init = function(self,textures)
+					self.frameWidth = textures[self.texture_name]:getWidth() 
+				end,
+				
+				draw = function(self, textures,x,y)
 					love.graphics.setColor(80*game.random:random(10,40),
 											0,0,220)
-					SCALE_DRAW_IMAGE_OBJECT(self,textures)	
+					DRAW_IMAGE_OBJECT(self,textures,x,y)	
 				end,
 
 				number_of_frames = 1,

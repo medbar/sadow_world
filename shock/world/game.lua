@@ -76,7 +76,7 @@ function game.update(dt)
 	game.world:update(dt)
 	if game.state == "inLevel" then
 		player.update(dt)
-		enemyManager.update()
+		enemyManager.update(dt)
 		level.update(dt)
 	elseif game.state == "dialog" then
 		dialogManager.update()

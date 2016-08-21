@@ -71,9 +71,23 @@ end
 
 
 
+
+
+function MELEE_ATTACK_TARGET(self)
+	if self.wantAttack then
+		return 1, ENEMY_ATTACK
+	end
+	return 0, ENEMY_ATTACK
+end
+
+
 -- ФУНКЦИИ-ДЕЙСТВИЯ 
 -- возвращают true, если надо продолжить выполнение 
 
+
+function ENEMY_ATTACK(self)
+	self.step = self.attack
+end
 
 function CATCH_UP_PLAYER(self)
 	local dx = self.phys.body:getX() - player.getX()
@@ -85,8 +99,9 @@ function CATCH_UP_PLAYER(self)
 		CHANGE_DIRECTION(self)
 	end
 
-	SINGLE_ENEMY_STEP(self)
-	return false
+	self.pS = 2
+	self.step = SINGLE_ENEMY_STEP
+	return true
 end
 
 
@@ -106,6 +121,7 @@ end
 
 -- функции хода 
 function SINGLE_ENEMY_STEP(self)
+
 	local vx, vy = self.phys.body:getLinearVelocity()
 	if vx*self.direction > self.characteristics.maxVx then
 		return
@@ -116,13 +132,15 @@ end
 
 
 function ENEMY_STOP(self)
-	local vx, vy = self.phys.body:getLinearVelocity()
-	--CHANGE_DIRECTION(self)
-	if math.abs(vx) < 10 then
-		return false
-	end
-	--CHANGE_DIRECTION(self)
-	--self.phys.body:applyForce(self.characteristics.stepForce * self.direction, 0)
+	self.step = DO_NOTHING
+	self.pS = 1
+	-- local vx, vy = self.phys.body:getLinearVelocity()
+	-- --CHANGE_DIRECTION(self)
+	-- if math.abs(vx) < 10 then
+	-- 	return false
+	-- end
+	-- --CHANGE_DIRECTION(self)
+	-- --self.phys.body:applyForce(self.characteristics.stepForce * self.direction, 0)
 	return false
 end
 
@@ -132,13 +150,18 @@ end
 -- CALLBACKS
 
 
-function JUMP_ON_THE_UMBRELLA(a,b,coll)
+function THE_UMBRELLA(a,b,coll)
 	local xn,yn = coll:getNormal()
-	--if math.abs(xn) < math.abs(yn) then
+	if math.abs(xn) > math.abs(yn) then
+		a:getUserData().wantAttack = b:getUserData()
+		return
+	end
+
 	if yn >0 then 
 		if b:getUserData() == player then
 			local x,y = player.body:getLinearVelocity() 	
-			player.body:setLinearVelocity(x, -y-50)
+			player.body:setLinearVelocity(x, -400)
+			a:getUserData().pS = 4
 		end
 	end
 end

@@ -325,16 +325,16 @@ local result = {
 -- самы нижний блок 
 			{
 
-				texture_name = "graphics/game/grass.jpg",
+				texture_name = "graphics/game/dirt.jpg",
 				x =BASEMENT - 1600,
 				y = SEA_LEVEL + 2800,
 				init = MESH_OBJECT, 
 				mode = "fan", 
 				vertices = {
-							{0, 0 , 0,0},
-							{2400, 0 , 8,0},	
-							{2400, 300 , 8,1},
-							{0, 300 , 0,1}
+							{0, 0 , },
+							{2400, 0 , },	
+							{2400, 300 , },
+							{0, 300 , }
 							},
 	},
 
@@ -595,7 +595,7 @@ local result = {
 
 -- пол в покере	
 			{
-				texture_name = "graphics/game/London/pockerParket.jpg",
+				texture_name = "graphics/game/London/parket.png",
 				x =BASEMENT + 2000,
 				y = SEA_LEVEL + 1600,
 				init = MESH_OBJECT, 
@@ -603,8 +603,8 @@ local result = {
 				vertices = {
 							{0, 0, },
 							{3000, 0 , },	
-							{3000, 200 , },
-							{0, 200 , }
+							{3000, 200 ,nil,1 },
+							{0, 200 ,0,1 }
 							},	
 	},
 
